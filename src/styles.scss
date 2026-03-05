@@ -4,11 +4,11 @@ html, body {
   height: 100%;
   margin: 0;
   font-family: Roboto, "Helvetica Neue", sans-serif;
-  background-color: #fdfbff;
+  color-scheme: light dark;
 }
 
 // Minimal Material 3 theme configuration
-$theme: mat.define-theme((
+$light-theme: mat.define-theme((
   color: (
     theme-type: light,
     primary: mat.$azure-palette,
@@ -23,9 +23,66 @@ $theme: mat.define-theme((
   )
 ));
 
-@include mat.all-component-themes($theme);
-@include mat.system-level-typography($theme);
-@include mat.system-level-colors($theme);
+$dark-theme: mat.define-theme((
+  color: (
+    theme-type: dark,
+    primary: mat.$azure-palette,
+    tertiary: mat.$rose-palette,
+  ),
+  typography: (
+    brand-family: 'Roboto',
+    plain-family: 'Roboto',
+  ),
+  density: (
+    scale: 0
+  )
+));
+
+// Default: light theme
+@include mat.all-component-themes($light-theme);
+@include mat.system-level-typography($light-theme);
+@include mat.system-level-colors($light-theme);
+
+:root {
+  --surface: #{mat.get-theme-color($light-theme, surface)};
+  --on-surface: #{mat.get-theme-color($light-theme, on-surface)};
+  --surface-container-high: #{mat.get-theme-color($light-theme, surface-container-high)};
+  --outline-variant: #{mat.get-theme-color($light-theme, outline-variant)};
+  --primary: #{mat.get-theme-color($light-theme, primary)};
+  --error: #{mat.get-theme-color($light-theme, error)};
+  --on-error: #{mat.get-theme-color($light-theme, on-error)};
+  --error-container: #{mat.get-theme-color($light-theme, error-container)};
+  --on-error-container: #{mat.get-theme-color($light-theme, on-error-container)};
+  // For custom green colors, using tertiary as a substitute or defining them manually
+  --success-container: #e8f5e9;
+  --on-success-container: #2e7d32;
+}
+
+html {
+  background-color: var(--surface);
+  color: var(--on-surface);
+}
+
+// Automatic dark mode based on system appearance
+@media (prefers-color-scheme: dark) {
+  @include mat.all-component-colors($dark-theme);
+  @include mat.system-level-colors($dark-theme);
+
+  :root {
+    --surface: #{mat.get-theme-color($dark-theme, surface)};
+    --on-surface: #{mat.get-theme-color($dark-theme, on-surface)};
+    --surface-container-high: #{mat.get-theme-color($dark-theme, surface-container-high)};
+    --outline-variant: #{mat.get-theme-color($dark-theme, outline-variant)};
+    --primary: #{mat.get-theme-color($dark-theme, primary)};
+    --error: #{mat.get-theme-color($dark-theme, error)};
+    --on-error: #{mat.get-theme-color($dark-theme, on-error)};
+    --error-container: #{mat.get-theme-color($dark-theme, error-container)};
+    --on-error-container: #{mat.get-theme-color($dark-theme, on-error-container)};
+    // Dark mode success colors
+    --success-container: #1b5e20;
+    --on-success-container: #c8e6c9;
+  }
+}
 
 .spacer {
   flex: 1 1 auto;
