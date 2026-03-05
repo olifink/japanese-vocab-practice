@@ -46,7 +46,9 @@
     <div class="practice-area">
       <mat-card class="verb-card">
         <mat-card-header>
-          <mat-card-subtitle>Current Verb</mat-card-subtitle>
+          <mat-card-subtitle>
+            Current Verb ({{ currentVerb()?.group }})
+          </mat-card-subtitle>
           <mat-card-title>
             @if (mode() === 'JP-EN') {
               <h1>{{ currentVerb()?.masuForm }}</h1>
