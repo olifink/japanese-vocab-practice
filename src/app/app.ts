@@ -9,6 +9,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { MatExpansionModule } from '@angular/material/expansion';
 import { VocabService, Verb } from './services/vocab';
 
 type PracticeMode = 'JP-EN' | 'EN-JP';
@@ -26,7 +27,8 @@ type PracticeMode = 'JP-EN' | 'EN-JP';
     MatSelectModule,
     MatToolbarModule,
     MatIconModule,
-    MatSlideToggleModule
+    MatSlideToggleModule,
+    MatExpansionModule
   ],
   templateUrl: './app.html',
   styleUrl: './app.scss'
@@ -38,9 +40,11 @@ export class App {
   private vocabService = inject(VocabService);
   verbs = this.vocabService.getVerbs();
   
-  mode = signal<PracticeMode>('JP-EN');
-  isReviewMode = signal<boolean>(false);
-  selectedLesson = signal<number | 'all'>('all');
+  mode = signal<PracticeMode>((localStorage.getItem('mode') as PracticeMode) || 'JP-EN');
+  isReviewMode = signal<boolean>(localStorage.getItem('isReviewMode') === 'true');
+  selectedLesson = signal<number | 'all'>(this.getInitialLesson());
+  
+  showSettings = signal<boolean>(false);
   
   currentVerbIndex = signal<number>(0);
   userInput = signal<string>('');
@@ -82,6 +86,20 @@ export class App {
         this.userInputField?.nativeElement?.focus();
       });
     });
+
+    // Persist settings
+    effect(() => {
+      localStorage.setItem('mode', this.mode());
+      localStorage.setItem('isReviewMode', this.isReviewMode().toString());
+      localStorage.setItem('selectedLesson', this.selectedLesson().toString());
+    });
+  }
+
+  private getInitialLesson(): number | 'all' {
+    const saved = localStorage.getItem('selectedLesson');
+    if (!saved || saved === 'all') return 'all';
+    const num = parseInt(saved, 10);
+    return isNaN(num) ? 'all' : num;
   }
 
   checkAnswer() {
