@@ -94,13 +94,17 @@
         </mat-card-content>
 
         <mat-card-actions class="card-actions">
-          <mat-slide-toggle [checked]="isReviewMode()" (change)="isReviewMode.set($event.checked)">
-            Review
-          </mat-slide-toggle>
+          <div class="toggles">
+            <mat-slide-toggle [checked]="isReviewMode()" (change)="isReviewMode.set($event.checked)">
+              Review
+            </mat-slide-toggle>
+            
+            <mat-slide-toggle [checked]="isRandomMode()" (change)="isRandomMode.set($event.checked)">
+              Random
+            </mat-slide-toggle>
+          </div>
           
           <span class="spacer"></span>
-          
-          <button mat-button (click)="shuffle()">SHUFFLE</button>
           
           @if (isReviewMode()) {
             <button mat-flat-button #nextButton color="primary" (click)="nextWord()">NEXT</button>

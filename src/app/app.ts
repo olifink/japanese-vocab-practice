@@ -45,6 +45,7 @@ export class App {
   
   mode = signal<PracticeMode>((localStorage.getItem('mode') as PracticeMode) || 'JP-EN');
   isReviewMode = signal<boolean>(localStorage.getItem('isReviewMode') === 'true');
+  isRandomMode = signal<boolean>(localStorage.getItem('isRandomMode') === 'true');
   selectedLesson = signal<number | 'all'>(this.getInitialLesson());
   lessonRangeMode = signal<LessonRangeMode>((localStorage.getItem('lessonRangeMode') as LessonRangeMode) || 'exact');
   
@@ -102,6 +103,7 @@ export class App {
     effect(() => {
       localStorage.setItem('mode', this.mode());
       localStorage.setItem('isReviewMode', this.isReviewMode().toString());
+      localStorage.setItem('isRandomMode', this.isRandomMode().toString());
       localStorage.setItem('selectedLesson', this.selectedLesson().toString());
       localStorage.setItem('lessonRangeMode', this.lessonRangeMode());
     });
@@ -147,7 +149,17 @@ export class App {
   }
 
   nextWord() {
-    this.currentVerbIndex.update(i => i + 1);
+    const list = this.filteredVerbs();
+    if (this.isRandomMode() && list.length > 1) {
+      let newIndex;
+      do {
+        newIndex = Math.floor(Math.random() * list.length);
+      } while (newIndex === this.currentVerbIndex() % list.length);
+      this.currentVerbIndex.set(newIndex);
+    } else {
+      this.currentVerbIndex.update(i => (i + 1) % list.length);
+    }
+
     this.userInput.set('');
     this.feedback.set(null);
     
@@ -155,18 +167,5 @@ export class App {
     setTimeout(() => {
       this.userInputField?.nativeElement?.focus();
     });
-  }
-
-  shuffle() {
-    const list = this.filteredVerbs();
-    if (list.length > 0) {
-      this.currentVerbIndex.set(Math.floor(Math.random() * list.length));
-      this.userInput.set('');
-      this.feedback.set(null);
-      
-      setTimeout(() => {
-        this.userInputField?.nativeElement?.focus();
-      });
-    }
   }
 }
