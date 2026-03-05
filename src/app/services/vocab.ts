@@ -23,7 +23,7 @@ export class VocabService {
   constructor(private http: HttpClient) {}
 
   async loadVerbs(): Promise<void> {
-    const csvData = await firstValueFrom(this.http.get('/verbs.csv', { responseType: 'text' }));
+    const csvData = await firstValueFrom(this.http.get('verbs.csv', { responseType: 'text' }));
     
     Papa.parse(csvData, {
       header: true,
