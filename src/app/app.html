@@ -22,6 +22,12 @@
         }
       </mat-select>
     </mat-form-field>
+
+    <div class="toggle-container">
+      <mat-slide-toggle [checked]="isReviewMode()" (change)="isReviewMode.set($event.checked)">
+        Review Mode
+      </mat-slide-toggle>
+    </div>
   </div>
 
   @if (currentVerb()) {
@@ -39,28 +45,45 @@
         </mat-card-header>
 
         <mat-card-content>
-          <mat-form-field appearance="fill" class="full-width">
-            <mat-label>{{ mode() === 'JP-EN' ? 'Translation' : 'Japanese (-masu form)' }}</mat-label>
-            <input matInput 
-                   [value]="userInput()" 
-                   (input)="userInput.set($any($event.target).value)" 
-                   (keyup.enter)="checkAnswer()"
-                   autocomplete="off">
-          </mat-form-field>
-
-          @if (feedback()) {
-            <div class="feedback" [class.correct]="feedback()?.correct" [class.incorrect]="!feedback()?.correct">
-              {{ feedback()?.message }}
+          @if (isReviewMode()) {
+            <div class="review-answer">
+              <p class="answer-label">Answer:</p>
+              @if (mode() === 'JP-EN') {
+                <p class="answer-text">{{ currentVerb()?.meaning }}</p>
+              } @else {
+                <p class="answer-text">{{ currentVerb()?.masuForm }}</p>
+              }
             </div>
+          } @else {
+            <mat-form-field appearance="fill" class="full-width">
+              <mat-label>{{ mode() === 'JP-EN' ? 'Translation' : 'Japanese (-masu form)' }}</mat-label>
+              <input matInput 
+                     #userInputField
+                     [value]="userInput()" 
+                     (input)="userInput.set($any($event.target).value)" 
+                     (keyup.enter)="checkAnswer()"
+                     autocomplete="off">
+            </mat-form-field>
+
+            @if (feedback()) {
+              <div class="feedback" [class.correct]="feedback()?.correct" [class.incorrect]="!feedback()?.correct">
+                {{ feedback()?.message }}
+              </div>
+            }
           }
         </mat-card-content>
 
         <mat-card-actions align="end">
           <button mat-button (click)="shuffle()">SHUFFLE</button>
-          @if (!feedback()) {
-            <button mat-flat-button color="primary" (click)="checkAnswer()">CHECK</button>
+          
+          @if (isReviewMode()) {
+            <button mat-flat-button #nextButton color="primary" (click)="nextWord()">NEXT</button>
           } @else {
-            <button mat-flat-button color="primary" (click)="nextWord()">NEXT</button>
+            @if (!feedback()) {
+              <button mat-flat-button color="primary" (click)="checkAnswer()" [disabled]="!isInputValid()">CHECK</button>
+            } @else {
+              <button mat-flat-button #nextButton color="primary" (click)="nextWord()">NEXT</button>
+            }
           }
         </mat-card-actions>
       </mat-card>

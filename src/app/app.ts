@@ -1,4 +1,4 @@
-import { Component, signal, computed, effect, inject } from '@angular/core';
+import { Component, signal, computed, effect, inject, ViewChild, ElementRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
@@ -8,6 +8,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatIconModule } from '@angular/material/icon';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { VocabService, Verb } from './services/vocab';
 
 type PracticeMode = 'JP-EN' | 'EN-JP';
@@ -24,21 +25,28 @@ type PracticeMode = 'JP-EN' | 'EN-JP';
     MatInputModule,
     MatSelectModule,
     MatToolbarModule,
-    MatIconModule
+    MatIconModule,
+    MatSlideToggleModule
   ],
   templateUrl: './app.html',
   styleUrl: './app.scss'
 })
 export class App {
+  @ViewChild('userInputField') userInputField!: ElementRef<HTMLInputElement>;
+  @ViewChild('nextButton', { read: ElementRef }) nextButton!: ElementRef<HTMLButtonElement>;
+
   private vocabService = inject(VocabService);
   verbs = this.vocabService.getVerbs();
   
   mode = signal<PracticeMode>('JP-EN');
+  isReviewMode = signal<boolean>(false);
   selectedLesson = signal<number | 'all'>('all');
   
   currentVerbIndex = signal<number>(0);
   userInput = signal<string>('');
   feedback = signal<{ correct: boolean; message: string } | null>(null);
+
+  isInputValid = computed(() => this.userInput().trim().length >= 3);
 
   filteredVerbs = computed(() => {
     const allVerbs = this.verbs();
@@ -68,6 +76,11 @@ export class App {
       this.currentVerbIndex.set(0);
       this.feedback.set(null);
       this.userInput.set('');
+      
+      // Focus input field when filter/mode changes
+      setTimeout(() => {
+        this.userInputField?.nativeElement?.focus();
+      });
     });
   }
 
@@ -76,14 +89,15 @@ export class App {
     if (!verb) return;
 
     const answer = this.userInput().trim().toLowerCase();
+    if (!answer) return; // Ignore empty submissions or treat as "not checked"
+
     let isCorrect = false;
     let correctAnswer = '';
 
     if (this.mode() === 'JP-EN') {
-      // Meaning can have multiple translations or be "enjoy oneself, play"
-      // We'll do a simple check first
       const meanings = verb.meaning.split(',').map(m => m.trim().toLowerCase());
-      isCorrect = meanings.some(m => answer === m || verb.meaning.toLowerCase().includes(answer));
+      // Revert to includes check as requested
+      isCorrect = meanings.some(m => m.includes(answer)) || verb.meaning.toLowerCase().includes(answer);
       correctAnswer = verb.meaning;
     } else {
       isCorrect = answer === verb.masuForm;
@@ -95,21 +109,34 @@ export class App {
     } else {
       this.feedback.set({ correct: false, message: `Incorrect. Correct answer: ${correctAnswer}` });
     }
+
+    // Focus the next button after checking
+    setTimeout(() => {
+      this.nextButton?.nativeElement?.focus();
+    });
   }
 
   nextWord() {
     this.currentVerbIndex.update(i => i + 1);
     this.userInput.set('');
     this.feedback.set(null);
+    
+    // Focus input field for the next word
+    setTimeout(() => {
+      this.userInputField?.nativeElement?.focus();
+    });
   }
 
   shuffle() {
-    // Shuffling is harder with computed, let's just use random index
     const list = this.filteredVerbs();
     if (list.length > 0) {
       this.currentVerbIndex.set(Math.floor(Math.random() * list.length));
       this.userInput.set('');
       this.feedback.set(null);
+      
+      setTimeout(() => {
+        this.userInputField?.nativeElement?.focus();
+      });
     }
   }
 }

@@ -9,6 +9,11 @@
   gap: 1rem;
   margin-bottom: 2rem;
   flex-wrap: wrap;
+  align-items: center;
+}
+
+.toggle-container {
+  margin-bottom: 22px; // Align with form fields
 }
 
 .practice-area {
@@ -32,6 +37,28 @@ h1 {
 
 .full-width {
   width: 100%;
+}
+
+.review-answer {
+  text-align: center;
+  padding: 1.5rem;
+  background-color: #f3f0f5;
+  border-radius: 16px;
+  margin: 1rem 0;
+
+  .answer-label {
+    font-size: 0.9rem;
+    color: #6750a4;
+    margin-bottom: 0.5rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1rem;
+  }
+
+  .answer-text {
+    font-size: 1.8rem;
+    font-weight: 500;
+    margin: 0;
+  }
 }
 
 .feedback {
