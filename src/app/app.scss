@@ -48,10 +48,6 @@
   }
 }
 
-.toggle-container {
-  margin-bottom: 8px;
-}
-
 .practice-area {
   display: flex;
   flex-direction: column;
@@ -63,6 +59,14 @@
   margin-bottom: 1rem;
   padding: 1rem;
   border-radius: 28px; // M3 expressive style
+}
+
+.card-actions {
+  display: flex;
+  align-items: center;
+  padding: 0 16px 16px 16px !important;
+  gap: 8px;
+  flex-wrap: wrap;
 }
 
 h1 {
@@ -152,6 +156,21 @@ h1 {
     mat-button-toggle-group {
       width: 100%;
       margin-bottom: 16px;
+    }
+  }
+
+  .card-actions {
+    justify-content: center;
+    
+    .spacer {
+      display: none;
+    }
+
+    mat-slide-toggle {
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      margin-bottom: 8px;
     }
   }
 }

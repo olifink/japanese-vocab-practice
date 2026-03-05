@@ -45,14 +45,6 @@
           </mat-button-toggle-group>
         }
       </div>
-
-      <div class="control-row">
-        <div class="toggle-container">
-          <mat-slide-toggle [checked]="isReviewMode()" (change)="isReviewMode.set($event.checked)">
-            Review Mode
-          </mat-slide-toggle>
-        </div>
-      </div>
     </div>
   </mat-expansion-panel>
 
@@ -101,7 +93,13 @@
           }
         </mat-card-content>
 
-        <mat-card-actions align="end">
+        <mat-card-actions class="card-actions">
+          <mat-slide-toggle [checked]="isReviewMode()" (change)="isReviewMode.set($event.checked)">
+            Review
+          </mat-slide-toggle>
+          
+          <span class="spacer"></span>
+          
           <button mat-button (click)="shuffle()">SHUFFLE</button>
           
           @if (isReviewMode()) {
