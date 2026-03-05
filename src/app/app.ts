@@ -10,9 +10,11 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatExpansionModule } from '@angular/material/expansion';
+import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { VocabService, Verb } from './services/vocab';
 
 type PracticeMode = 'JP-EN' | 'EN-JP';
+type LessonRangeMode = 'exact' | 'up-to';
 
 @Component({
   selector: 'app-root',
@@ -28,7 +30,8 @@ type PracticeMode = 'JP-EN' | 'EN-JP';
     MatToolbarModule,
     MatIconModule,
     MatSlideToggleModule,
-    MatExpansionModule
+    MatExpansionModule,
+    MatButtonToggleModule
   ],
   templateUrl: './app.html',
   styleUrl: './app.scss'
@@ -43,6 +46,7 @@ export class App {
   mode = signal<PracticeMode>((localStorage.getItem('mode') as PracticeMode) || 'JP-EN');
   isReviewMode = signal<boolean>(localStorage.getItem('isReviewMode') === 'true');
   selectedLesson = signal<number | 'all'>(this.getInitialLesson());
+  lessonRangeMode = signal<LessonRangeMode>((localStorage.getItem('lessonRangeMode') as LessonRangeMode) || 'exact');
   
   showSettings = signal<boolean>(false);
   
@@ -55,7 +59,13 @@ export class App {
   filteredVerbs = computed(() => {
     const allVerbs = this.verbs();
     const lesson = this.selectedLesson();
+    const rangeMode = this.lessonRangeMode();
+    
     if (lesson === 'all') return allVerbs;
+    
+    if (rangeMode === 'up-to') {
+      return allVerbs.filter(v => v.lesson <= (lesson as number));
+    }
     return allVerbs.filter(v => v.lesson === lesson);
   });
 
@@ -77,6 +87,7 @@ export class App {
     // Reset index when filter changes
     effect(() => {
       this.selectedLesson();
+      this.lessonRangeMode();
       this.currentVerbIndex.set(0);
       this.feedback.set(null);
       this.userInput.set('');
@@ -92,6 +103,7 @@ export class App {
       localStorage.setItem('mode', this.mode());
       localStorage.setItem('isReviewMode', this.isReviewMode().toString());
       localStorage.setItem('selectedLesson', this.selectedLesson().toString());
+      localStorage.setItem('lessonRangeMode', this.lessonRangeMode());
     });
   }
 
