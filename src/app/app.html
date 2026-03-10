@@ -22,7 +22,7 @@
           <mat-label>Practice Mode</mat-label>
           <mat-select [value]="mode()" (selectionChange)="mode.set($event.value)">
             <mat-option value="JP-EN">Japanese to English</mat-option>
-            <mat-option value="EN-JP">English to Japanese (-masu form)</mat-option>
+            <mat-option value="EN-JP">English to Japanese</mat-option>
           </mat-select>
         </mat-form-field>
       </div>
@@ -48,18 +48,18 @@
     </div>
   </mat-expansion-panel>
 
-  @if (currentVerb()) {
+  @if (currentWord()) {
     <div class="practice-area">
       <mat-card class="verb-card">
         <mat-card-header>
           <mat-card-subtitle>
-            Current Verb ({{ currentVerb()?.group }})
+            Current Word ({{ currentWord()?.group }})
           </mat-card-subtitle>
           <mat-card-title>
             @if (mode() === 'JP-EN') {
-              <h1>{{ currentVerb()?.masuForm }}</h1>
+              <h1>{{ currentWord()?.japaneseForm }}</h1>
             } @else {
-              <h1>{{ currentVerb()?.meaning }}</h1>
+              <h1>{{ currentWord()?.meaning }}</h1>
             }
           </mat-card-title>
         </mat-card-header>
@@ -69,14 +69,14 @@
             <div class="review-answer">
               <p class="answer-label">Answer:</p>
               @if (mode() === 'JP-EN') {
-                <p class="answer-text">{{ currentVerb()?.meaning }}</p>
+                <p class="answer-text">{{ currentWord()?.meaning }}</p>
               } @else {
-                <p class="answer-text">{{ currentVerb()?.masuForm }}</p>
+                <p class="answer-text">{{ currentWord()?.japaneseForm }}</p>
               }
             </div>
           } @else {
             <mat-form-field appearance="fill" class="full-width">
-              <mat-label>{{ mode() === 'JP-EN' ? 'Translation' : 'Japanese (-masu form)' }}</mat-label>
+              <mat-label>{{ mode() === 'JP-EN' ? 'Translation' : 'Japanese' }}</mat-label>
               <input matInput 
                      #userInputField
                      [value]="userInput()" 
@@ -119,15 +119,15 @@
       </mat-card>
 
       <div class="stats">
-        Verb {{ (currentVerbIndex() % filteredVerbs().length) + 1 }} of {{ filteredVerbs().length }} (Lesson {{ currentVerb()?.lesson }})
+        Word {{ (currentVerbIndex() % filteredVocab().length) + 1 }} of {{ filteredVocab().length }} (Lesson {{ currentWord()?.lesson }})
       </div>
     </div>
   } @else {
     <div class="loading">
-      @if (verbs().length === 0) {
+      @if (vocab().length === 0) {
         <p>Loading vocabulary...</p>
       } @else {
-        <p>No verbs found for this lesson.</p>
+        <p>No vocabulary found for this lesson.</p>
       }
     </div>
   }

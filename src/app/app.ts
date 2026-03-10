@@ -11,7 +11,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
-import { VocabService, Verb } from './services/vocab';
+import { VocabService } from './services/vocab';
 
 type PracticeMode = 'JP-EN' | 'EN-JP';
 type LessonRangeMode = 'exact' | 'up-to';
@@ -41,7 +41,7 @@ export class App {
   @ViewChild('nextButton', { read: ElementRef }) nextButton!: ElementRef<HTMLButtonElement>;
 
   private vocabService = inject(VocabService);
-  verbs = this.vocabService.getVerbs();
+  vocab = this.vocabService.getVocab();
   
   mode = signal<PracticeMode>((localStorage.getItem('mode') as PracticeMode) || 'JP-EN');
   isReviewMode = signal<boolean>(localStorage.getItem('isReviewMode') === 'true');
@@ -57,33 +57,33 @@ export class App {
 
   isInputValid = computed(() => this.userInput().trim().length >= 3);
 
-  filteredVerbs = computed(() => {
-    const allVerbs = this.verbs();
+  filteredVocab = computed(() => {
+    const allVocab = this.vocab();
     const lesson = this.selectedLesson();
     const rangeMode = this.lessonRangeMode();
     
-    if (lesson === 'all') return allVerbs;
+    if (lesson === 'all') return allVocab;
     
     if (rangeMode === 'up-to') {
-      return allVerbs.filter(v => v.lesson <= (lesson as number));
+      return allVocab.filter(v => v.lesson <= (lesson as number));
     }
-    return allVerbs.filter(v => v.lesson === lesson);
+    return allVocab.filter(v => v.lesson === lesson);
   });
 
-  currentVerb = computed(() => {
-    const list = this.filteredVerbs();
+  currentWord = computed(() => {
+    const list = this.filteredVocab();
     if (list.length === 0) return null;
     return list[this.currentVerbIndex() % list.length];
   });
 
   lessons = computed(() => {
-    const allVerbs = this.verbs();
-    const uniqueLessons = [...new Set(allVerbs.map(v => v.lesson))].sort((a, b) => a - b);
+    const allVocab = this.vocab();
+    const uniqueLessons = [...new Set(allVocab.map(v => v.lesson))].sort((a, b) => a - b);
     return uniqueLessons;
   });
 
   constructor() {
-    this.vocabService.loadVerbs();
+    this.vocabService.loadVocab();
     
     // Reset index when filter changes
     effect(() => {
@@ -117,23 +117,22 @@ export class App {
   }
 
   checkAnswer() {
-    const verb = this.currentVerb();
-    if (!verb) return;
+    const word = this.currentWord();
+    if (!word) return;
 
     const answer = this.userInput().trim().toLowerCase();
-    if (!answer) return; // Ignore empty submissions or treat as "not checked"
+    if (!answer) return;
 
     let isCorrect = false;
     let correctAnswer = '';
 
     if (this.mode() === 'JP-EN') {
-      const meanings = verb.meaning.split(',').map(m => m.trim().toLowerCase());
-      // Revert to includes check as requested
-      isCorrect = meanings.some(m => m.includes(answer)) || verb.meaning.toLowerCase().includes(answer);
-      correctAnswer = verb.meaning;
+      const meanings = word.meaning.split(',').map(m => m.trim().toLowerCase());
+      isCorrect = meanings.some(m => m.includes(answer)) || word.meaning.toLowerCase().includes(answer);
+      correctAnswer = word.meaning;
     } else {
-      isCorrect = answer === verb.masuForm;
-      correctAnswer = verb.masuForm;
+      isCorrect = answer === word.japaneseForm;
+      correctAnswer = word.japaneseForm;
     }
 
     if (isCorrect) {
@@ -149,7 +148,7 @@ export class App {
   }
 
   nextWord() {
-    const list = this.filteredVerbs();
+    const list = this.filteredVocab();
     if (this.isRandomMode() && list.length > 1) {
       let newIndex;
       do {

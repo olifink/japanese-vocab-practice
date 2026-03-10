@@ -3,9 +3,9 @@ import { HttpClient } from '@angular/common/http';
 import * as Papa from 'papaparse';
 import { firstValueFrom } from 'rxjs';
 
-export interface Verb {
+export interface VocabItem {
   group: string;
-  masuForm: string;
+  japaneseForm: string;
   dictionaryForm: string;
   teForm: string;
   naiForm: string;
@@ -18,20 +18,20 @@ export interface Verb {
   providedIn: 'root'
 })
 export class VocabService {
-  private verbs = signal<Verb[]>([]);
+  private vocab = signal<VocabItem[]>([]);
 
   constructor(private http: HttpClient) {}
 
-  async loadVerbs(): Promise<void> {
-    const csvData = await firstValueFrom(this.http.get('verbs.csv', { responseType: 'text' }));
-    
+  async loadVocab(): Promise<void> {
+    const csvData = await firstValueFrom(this.http.get('lessons.csv', { responseType: 'text' }));
+
     Papa.parse(csvData, {
       header: true,
       skipEmptyLines: true,
       complete: (results) => {
-        const parsedVerbs: Verb[] = results.data.map((row: any) => ({
+        const parsed: VocabItem[] = results.data.map((row: any) => ({
           group: row['group'],
-          masuForm: row['ます-form'],
+          japaneseForm: row['N/A/Vます-form'],
           dictionaryForm: row['dictionary form'],
           teForm: row['て-form'],
           naiForm: row['ない-form'],
@@ -39,12 +39,12 @@ export class VocabService {
           meaning: row['meaning'],
           lesson: parseInt(row['lesson'], 10)
         }));
-        this.verbs.set(parsedVerbs);
+        this.vocab.set(parsed);
       }
     });
   }
 
-  getVerbs() {
-    return this.verbs;
+  getVocab() {
+    return this.vocab;
   }
 }
