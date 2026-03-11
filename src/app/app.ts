@@ -42,28 +42,28 @@ export class App {
 
   private vocabService = inject(VocabService);
   vocab = this.vocabService.getVocab();
-  
+
   mode = signal<PracticeMode>((localStorage.getItem('mode') as PracticeMode) || 'JP-EN');
   isReviewMode = signal<boolean>(localStorage.getItem('isReviewMode') === 'true');
   isRandomMode = signal<boolean>(localStorage.getItem('isRandomMode') === 'true');
   selectedLesson = signal<number | 'all'>(this.getInitialLesson());
   lessonRangeMode = signal<LessonRangeMode>((localStorage.getItem('lessonRangeMode') as LessonRangeMode) || 'exact');
-  
+
   showSettings = signal<boolean>(false);
-  
+
   currentVerbIndex = signal<number>(0);
   userInput = signal<string>('');
   feedback = signal<{ correct: boolean; message: string } | null>(null);
 
-  isInputValid = computed(() => this.userInput().trim().length >= 3);
+  isInputValid = computed(() => this.userInput().trim().length >= 2);
 
   filteredVocab = computed(() => {
     const allVocab = this.vocab();
     const lesson = this.selectedLesson();
     const rangeMode = this.lessonRangeMode();
-    
+
     if (lesson === 'all') return allVocab;
-    
+
     if (rangeMode === 'up-to') {
       return allVocab.filter(v => v.lesson <= (lesson as number));
     }
@@ -84,7 +84,7 @@ export class App {
 
   constructor() {
     this.vocabService.loadVocab();
-    
+
     // Reset index when filter changes
     effect(() => {
       this.selectedLesson();
@@ -92,7 +92,7 @@ export class App {
       this.currentVerbIndex.set(0);
       this.feedback.set(null);
       this.userInput.set('');
-      
+
       // Focus input field when filter/mode changes
       setTimeout(() => {
         this.userInputField?.nativeElement?.focus();
@@ -161,7 +161,7 @@ export class App {
 
     this.userInput.set('');
     this.feedback.set(null);
-    
+
     // Focus input field for the next word
     setTimeout(() => {
       this.userInputField?.nativeElement?.focus();

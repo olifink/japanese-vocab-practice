@@ -46,7 +46,7 @@
         <mat-form-field appearance="fill" class="full-width">
           <mat-label>{{ mode() === 'JP-EN' ? 'Translation' : 'Japanese' }}</mat-label>
           <input matInput #userInputField [value]="userInput()" (input)="userInput.set($any($event.target).value)"
-            (keyup.enter)="checkAnswer()" autocomplete="off">
+            (keyup.enter)="checkAnswer()" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
         </mat-form-field>
 
         @if (feedback()) {
