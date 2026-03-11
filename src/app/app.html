@@ -4,6 +4,90 @@
 </mat-toolbar>
 
 <div class="container">
+
+
+  <div class="toggles">
+    <mat-slide-toggle [checked]="isReviewMode()" (change)="isReviewMode.set($event.checked)">
+      Review
+    </mat-slide-toggle>
+
+    <mat-slide-toggle [checked]="isRandomMode()" (change)="isRandomMode.set($event.checked)">
+      Random
+    </mat-slide-toggle>
+  </div>
+
+  @if (currentWord()) {
+  <div class="practice-area">
+    <mat-card class="verb-card">
+      <mat-card-header>
+        <mat-card-subtitle>
+          Current Word ({{ currentWord()?.group }})
+        </mat-card-subtitle>
+        <mat-card-title>
+          @if (mode() === 'JP-EN') {
+          <h1>{{ currentWord()?.japaneseForm }}</h1>
+          } @else {
+          <h1>{{ currentWord()?.meaning }}</h1>
+          }
+        </mat-card-title>
+      </mat-card-header>
+
+      <mat-card-content>
+        @if (isReviewMode()) {
+        <div class="review-answer">
+          <p class="answer-label">Answer:</p>
+          @if (mode() === 'JP-EN') {
+          <p class="answer-text">{{ currentWord()?.meaning }}</p>
+          } @else {
+          <p class="answer-text">{{ currentWord()?.japaneseForm }}</p>
+          }
+        </div>
+        } @else {
+        <mat-form-field appearance="fill" class="full-width">
+          <mat-label>{{ mode() === 'JP-EN' ? 'Translation' : 'Japanese' }}</mat-label>
+          <input matInput #userInputField [value]="userInput()" (input)="userInput.set($any($event.target).value)"
+            (keyup.enter)="checkAnswer()" autocomplete="off">
+        </mat-form-field>
+
+        @if (feedback()) {
+        <div class="feedback" [class.correct]="feedback()?.correct" [class.incorrect]="!feedback()?.correct">
+          {{ feedback()?.message }}
+        </div>
+        }
+        }
+      </mat-card-content>
+
+      <mat-card-actions class="card-actions">
+
+
+        <span class="spacer"></span>
+
+        @if (isReviewMode()) {
+        <button mat-flat-button #nextButton color="primary" (click)="nextWord()">NEXT</button>
+        } @else {
+        @if (!feedback()) {
+        <button mat-flat-button color="primary" (click)="checkAnswer()" [disabled]="!isInputValid()">CHECK</button>
+        } @else {
+        <button mat-flat-button #nextButton color="primary" (click)="nextWord()">NEXT</button>
+        }
+        }
+      </mat-card-actions>
+      <div class="stats">
+        Word {{ (currentVerbIndex() % filteredVocab().length) + 1 }} of {{ filteredVocab().length }} (Lesson {{
+        currentWord()?.lesson }})
+      </div>
+    </mat-card>
+  </div>
+  } @else {
+  <div class="loading">
+    @if (vocab().length === 0) {
+    <p>Loading vocabulary...</p>
+    } @else {
+    <p>No vocabulary found for this lesson.</p>
+    }
+  </div>
+  }
+
   <mat-expansion-panel class="settings-panel" [expanded]="showSettings()" (expandedChange)="showSettings.set($event)">
     <mat-expansion-panel-header>
       <mat-panel-title>
@@ -11,8 +95,9 @@
         <span class="settings-title">Settings</span>
       </mat-panel-title>
       <mat-panel-description>
-        {{ mode() === 'JP-EN' ? 'JP to EN' : 'EN to JP' }} | 
-        {{ selectedLesson() === 'all' ? 'All Lessons' : (lessonRangeMode() === 'up-to' ? 'Up to L' + selectedLesson() : 'L' + selectedLesson()) }}
+        {{ mode() === 'JP-EN' ? 'JP to EN' : 'EN to JP' }} |
+        {{ selectedLesson() === 'all' ? 'All Lessons' : (lessonRangeMode() === 'up-to' ? 'Up to L' + selectedLesson() :
+        'L' + selectedLesson()) }}
       </mat-panel-description>
     </mat-expansion-panel-header>
 
@@ -33,102 +118,19 @@
           <mat-select [value]="selectedLesson()" (selectionChange)="selectedLesson.set($event.value)">
             <mat-option value="all">All Lessons</mat-option>
             @for (lesson of lessons(); track lesson) {
-              <mat-option [value]="lesson">Lesson {{ lesson }}</mat-option>
+            <mat-option [value]="lesson">Lesson {{ lesson }}</mat-option>
             }
           </mat-select>
         </mat-form-field>
 
         @if (selectedLesson() !== 'all') {
-          <mat-button-toggle-group [value]="lessonRangeMode()" (change)="lessonRangeMode.set($event.value)" aria-label="Lesson Range">
-            <mat-button-toggle value="exact">Only</mat-button-toggle>
-            <mat-button-toggle value="up-to">Up to</mat-button-toggle>
-          </mat-button-toggle-group>
+        <mat-button-toggle-group [value]="lessonRangeMode()" (change)="lessonRangeMode.set($event.value)"
+          aria-label="Lesson Range">
+          <mat-button-toggle value="exact">Only</mat-button-toggle>
+          <mat-button-toggle value="up-to">Up to</mat-button-toggle>
+        </mat-button-toggle-group>
         }
       </div>
     </div>
   </mat-expansion-panel>
-
-  @if (currentWord()) {
-    <div class="practice-area">
-      <mat-card class="verb-card">
-        <mat-card-header>
-          <mat-card-subtitle>
-            Current Word ({{ currentWord()?.group }})
-          </mat-card-subtitle>
-          <mat-card-title>
-            @if (mode() === 'JP-EN') {
-              <h1>{{ currentWord()?.japaneseForm }}</h1>
-            } @else {
-              <h1>{{ currentWord()?.meaning }}</h1>
-            }
-          </mat-card-title>
-        </mat-card-header>
-
-        <mat-card-content>
-          @if (isReviewMode()) {
-            <div class="review-answer">
-              <p class="answer-label">Answer:</p>
-              @if (mode() === 'JP-EN') {
-                <p class="answer-text">{{ currentWord()?.meaning }}</p>
-              } @else {
-                <p class="answer-text">{{ currentWord()?.japaneseForm }}</p>
-              }
-            </div>
-          } @else {
-            <mat-form-field appearance="fill" class="full-width">
-              <mat-label>{{ mode() === 'JP-EN' ? 'Translation' : 'Japanese' }}</mat-label>
-              <input matInput 
-                     #userInputField
-                     [value]="userInput()" 
-                     (input)="userInput.set($any($event.target).value)" 
-                     (keyup.enter)="checkAnswer()"
-                     autocomplete="off">
-            </mat-form-field>
-
-            @if (feedback()) {
-              <div class="feedback" [class.correct]="feedback()?.correct" [class.incorrect]="!feedback()?.correct">
-                {{ feedback()?.message }}
-              </div>
-            }
-          }
-        </mat-card-content>
-
-        <mat-card-actions class="card-actions">
-          <div class="toggles">
-            <mat-slide-toggle [checked]="isReviewMode()" (change)="isReviewMode.set($event.checked)">
-              Review
-            </mat-slide-toggle>
-            
-            <mat-slide-toggle [checked]="isRandomMode()" (change)="isRandomMode.set($event.checked)">
-              Random
-            </mat-slide-toggle>
-          </div>
-          
-          <span class="spacer"></span>
-          
-          @if (isReviewMode()) {
-            <button mat-flat-button #nextButton color="primary" (click)="nextWord()">NEXT</button>
-          } @else {
-            @if (!feedback()) {
-              <button mat-flat-button color="primary" (click)="checkAnswer()" [disabled]="!isInputValid()">CHECK</button>
-            } @else {
-              <button mat-flat-button #nextButton color="primary" (click)="nextWord()">NEXT</button>
-            }
-          }
-        </mat-card-actions>
-      </mat-card>
-
-      <div class="stats">
-        Word {{ (currentVerbIndex() % filteredVocab().length) + 1 }} of {{ filteredVocab().length }} (Lesson {{ currentWord()?.lesson }})
-      </div>
-    </div>
-  } @else {
-    <div class="loading">
-      @if (vocab().length === 0) {
-        <p>Loading vocabulary...</p>
-      } @else {
-        <p>No vocabulary found for this lesson.</p>
-      }
-    </div>
-  }
 </div>
