@@ -1,55 +1,63 @@
+# CLAUDE.md
 
-You are an expert in TypeScript, Angular, and scalable web application development. You write functional, maintainable, performant, and accessible code following Angular and TypeScript best practices.
+This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
-## TypeScript Best Practices
+## Project Overview
 
-- Use strict type checking
-- Prefer type inference when the type is obvious
-- Avoid the `any` type; use `unknown` when type is uncertain
+Japanese Vocab Practice is a Progressive Web App (PWA) for practicing Japanese vocabulary. Built with Angular 21 and Angular Material 3, it features bi-directional practice modes (JP-EN / EN-JP), lesson filtering, and offline support.
 
-## Angular Best Practices
+## Development Commands
 
-- Always use standalone components over NgModules
-- Must NOT set `standalone: true` inside Angular decorators. It's the default in Angular v20+.
-- Use signals for state management
-- Implement lazy loading for feature routes
-- Do NOT use the `@HostBinding` and `@HostListener` decorators. Put host bindings inside the `host` object of the `@Component` or `@Directive` decorator instead
-- Use `NgOptimizedImage` for all static images.
-  - `NgOptimizedImage` does not work for inline base64 images.
+```bash
+npm start          # Run dev server at http://localhost:4200
+npm test           # Run unit tests with Vitest
+npm run build      # Production build to dist/
+npm run watch      # Development build with watch mode
+```
 
-## Accessibility Requirements
+Run a single test file:
+```bash
+npx vitest run src/app/services/vocab.spec.ts
+```
 
-- It MUST pass all AXE checks.
-- It MUST follow all WCAG AA minimums, including focus management, color contrast, and ARIA attributes.
+## Architecture
 
-### Components
+**State Management**: All application state uses Angular signals in the root `App` component (`src/app/app.ts`). Settings persist to localStorage.
 
-- Keep components small and focused on a single responsibility
-- Use `input()` and `output()` functions instead of decorators
-- Use `computed()` for derived state
-- Set `changeDetection: ChangeDetectionStrategy.OnPush` in `@Component` decorator
-- Prefer inline templates for small components
-- Prefer Reactive forms instead of Template-driven ones
-- Do NOT use `ngClass`, use `class` bindings instead
-- Do NOT use `ngStyle`, use `style` bindings instead
-- When using external templates/styles, use paths relative to the component TS file.
+**Data Flow**:
+- `VocabService` (`src/app/services/vocab.ts`) loads vocabulary from `public/lessons.csv` using PapaParse
+- Vocabulary is exposed as a signal and filtered via `computed()` based on lesson selection
+- No routing - single-page application with all UI in the App component
 
-## State Management
+**VocabItem Interface**:
+- `group`: Part of speech
+- `japaneseForm`, `dictionaryForm`, `teForm`, `naiForm`, `taForm`: Japanese word forms
+- `meaning`: English translation
+- `lesson`: Lesson number for filtering
 
-- Use signals for local component state
-- Use `computed()` for derived state
-- Keep state transformations pure and predictable
-- Do NOT use `mutate` on signals, use `update` or `set` instead
+**PWA**: Service worker config in `ngsw-config.json` prefetches app shell and caches Google Fonts.
 
-## Templates
+**Deployment**: GitHub Actions (`.github/workflows/deploy.yml`) auto-deploys to GitHub Pages on push to main.
 
-- Keep templates simple and avoid complex logic
-- Use native control flow (`@if`, `@for`, `@switch`) instead of `*ngIf`, `*ngFor`, `*ngSwitch`
-- Use the async pipe to handle observables
-- Do not assume globals like (`new Date()`) are available.
+## Coding Standards
 
-## Services
+### TypeScript
+- Strict type checking enabled
+- Prefer type inference when obvious
+- Avoid `any`; use `unknown` when type is uncertain
 
-- Design services around a single responsibility
-- Use the `providedIn: 'root'` option for singleton services
-- Use the `inject()` function instead of constructor injection
+### Angular
+- Standalone components only (do NOT set `standalone: true` - it's the default in Angular v20+)
+- Signals for state management, `computed()` for derived state
+- `ChangeDetectionStrategy.OnPush` required
+- Use `input()` and `output()` functions, not decorators
+- Use `inject()` function, not constructor injection
+- Use `host` object in decorators instead of `@HostBinding`/`@HostListener`
+- Native control flow (`@if`, `@for`, `@switch`) instead of structural directives
+- Property bindings instead of `ngClass`/`ngStyle`
+- Reactive forms over template-driven
+- `NgOptimizedImage` for static images
+
+### Accessibility
+- Must pass AXE checks
+- WCAG AA compliance required (focus management, color contrast, ARIA attributes)

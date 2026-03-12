@@ -1,0 +1,8 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(git -C \"D:\\\\projects\\\\my\\\\practice\\\\japanese-vocab-practice\" log --oneline -20)",
+      "Bash(git -C \"D:\\\\projects\\\\my\\\\practice\\\\japanese-vocab-practice\" branch:*)"
+    ]
+  }
+}
