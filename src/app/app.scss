@@ -69,12 +69,14 @@
   flex-wrap: wrap;
 }
 
-.toggles {
-  display: flex;
-  align-items: center;
-  gap: 12px;
+.toolbar-toggle {
+  transform: scale(0.85); // Make it slightly smaller in the toolbar
+  color: var(--on-primary);
 
-  padding: 16px;
+  // Styling label color for primary background
+  ::ng-deep .mdc-label {
+    color: var(--on-primary) !important;
+  }
 }
 
 h1 {
@@ -172,19 +174,6 @@ h1 {
 
     .spacer {
       display: none;
-    }
-
-    .toggles {
-      width: 100%;
-      flex-direction: column;
-      gap: 8px;
-      margin-bottom: 16px;
-    }
-
-    mat-slide-toggle {
-      width: 100%;
-      display: flex;
-      justify-content: center;
     }
   }
 }

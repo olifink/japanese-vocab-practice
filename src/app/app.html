@@ -1,15 +1,12 @@
 <mat-toolbar color="primary">
-  <span>Japanese Vocab Practice</span>
+  <span>JP Practice</span>
   <span class="spacer"></span>
+  <mat-slide-toggle [checked]="isRandomMode()" (change)="isRandomMode.set($event.checked)" class="toolbar-toggle">
+    Random
+  </mat-slide-toggle>
 </mat-toolbar>
 
 <div class="container">
-  <div class="toggles">
-    <mat-slide-toggle [checked]="isRandomMode()" (change)="isRandomMode.set($event.checked)">
-      Random
-    </mat-slide-toggle>
-  </div>
-
   @if (currentWord()) {
   <div class="practice-area">
     <mat-card class="verb-card">
