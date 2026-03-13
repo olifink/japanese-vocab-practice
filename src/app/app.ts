@@ -1,10 +1,7 @@
 import { Component, signal, computed, effect, inject, ViewChild, ElementRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatIconModule } from '@angular/material/icon';
@@ -21,11 +18,8 @@ type LessonRangeMode = 'exact' | 'up-to';
   standalone: true,
   imports: [
     CommonModule,
-    FormsModule,
     MatButtonModule,
     MatCardModule,
-    MatFormFieldModule,
-    MatInputModule,
     MatSelectModule,
     MatToolbarModule,
     MatIconModule,
@@ -37,14 +31,12 @@ type LessonRangeMode = 'exact' | 'up-to';
   styleUrl: './app.scss'
 })
 export class App {
-  @ViewChild('userInputField') userInputField!: ElementRef<HTMLInputElement>;
   @ViewChild('nextButton', { read: ElementRef }) nextButton!: ElementRef<HTMLButtonElement>;
 
   private vocabService = inject(VocabService);
   vocab = this.vocabService.getVocab();
 
   mode = signal<PracticeMode>((localStorage.getItem('mode') as PracticeMode) || 'JP-EN');
-  isReviewMode = signal<boolean>(localStorage.getItem('isReviewMode') === 'true');
   isRandomMode = signal<boolean>(localStorage.getItem('isRandomMode') === 'true');
   selectedLesson = signal<number | 'all'>(this.getInitialLesson());
   lessonRangeMode = signal<LessonRangeMode>((localStorage.getItem('lessonRangeMode') as LessonRangeMode) || 'exact');
@@ -52,10 +44,7 @@ export class App {
   showSettings = signal<boolean>(false);
 
   currentVerbIndex = signal<number>(0);
-  userInput = signal<string>('');
-  feedback = signal<{ correct: boolean; message: string } | null>(null);
-
-  isInputValid = computed(() => this.userInput().trim().length >= 2);
+  isRevealed = signal<boolean>(false);
 
   filteredVocab = computed(() => {
     const allVocab = this.vocab();
@@ -90,19 +79,12 @@ export class App {
       this.selectedLesson();
       this.lessonRangeMode();
       this.currentVerbIndex.set(0);
-      this.feedback.set(null);
-      this.userInput.set('');
-
-      // Focus input field when filter/mode changes
-      setTimeout(() => {
-        this.userInputField?.nativeElement?.focus();
-      });
+      this.isRevealed.set(false);
     });
 
     // Persist settings
     effect(() => {
       localStorage.setItem('mode', this.mode());
-      localStorage.setItem('isReviewMode', this.isReviewMode().toString());
       localStorage.setItem('isRandomMode', this.isRandomMode().toString());
       localStorage.setItem('selectedLesson', this.selectedLesson().toString());
       localStorage.setItem('lessonRangeMode', this.lessonRangeMode());
@@ -114,37 +96,6 @@ export class App {
     if (!saved || saved === 'all') return 'all';
     const num = parseInt(saved, 10);
     return isNaN(num) ? 'all' : num;
-  }
-
-  checkAnswer() {
-    const word = this.currentWord();
-    if (!word) return;
-
-    const answer = this.userInput().trim().toLowerCase();
-    if (!answer) return;
-
-    let isCorrect = false;
-    let correctAnswer = '';
-
-    if (this.mode() === 'JP-EN') {
-      const meanings = word.meaning.split(',').map(m => m.trim().toLowerCase());
-      isCorrect = meanings.some(m => m.includes(answer)) || word.meaning.toLowerCase().includes(answer);
-      correctAnswer = word.meaning;
-    } else {
-      isCorrect = answer === word.japaneseForm;
-      correctAnswer = word.japaneseForm;
-    }
-
-    if (isCorrect) {
-      this.feedback.set({ correct: true, message: 'Correct!' });
-    } else {
-      this.feedback.set({ correct: false, message: `Incorrect. Correct answer: ${correctAnswer}` });
-    }
-
-    // Focus the next button after checking
-    setTimeout(() => {
-      this.nextButton?.nativeElement?.focus();
-    });
   }
 
   nextWord() {
@@ -159,12 +110,11 @@ export class App {
       this.currentVerbIndex.update(i => (i + 1) % list.length);
     }
 
-    this.userInput.set('');
-    this.feedback.set(null);
+    this.isRevealed.set(false);
 
-    // Focus input field for the next word
+    // Focus the next button (or the reveal button will be focused by default if it's the only one)
     setTimeout(() => {
-      this.userInputField?.nativeElement?.focus();
+      this.nextButton?.nativeElement?.focus();
     });
   }
 }

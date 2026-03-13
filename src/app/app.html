@@ -4,13 +4,7 @@
 </mat-toolbar>
 
 <div class="container">
-
-
   <div class="toggles">
-    <mat-slide-toggle [checked]="isReviewMode()" (change)="isReviewMode.set($event.checked)">
-      Review
-    </mat-slide-toggle>
-
     <mat-slide-toggle [checked]="isRandomMode()" (change)="isRandomMode.set($event.checked)">
       Random
     </mat-slide-toggle>
@@ -33,43 +27,30 @@
       </mat-card-header>
 
       <mat-card-content>
-        @if (isReviewMode()) {
-        <div class="review-answer">
-          <p class="answer-label">Answer:</p>
-          @if (mode() === 'JP-EN') {
-          <p class="answer-text">{{ currentWord()?.meaning }}</p>
+        <div class="answer-section">
+          @if (isRevealed()) {
+          <div class="review-answer">
+            <p class="answer-label">Answer:</p>
+            @if (mode() === 'JP-EN') {
+            <p class="answer-text">{{ currentWord()?.meaning }}</p>
+            } @else {
+            <p class="answer-text">{{ currentWord()?.japaneseForm }}</p>
+            }
+          </div>
           } @else {
-          <p class="answer-text">{{ currentWord()?.japaneseForm }}</p>
+          <div class="placeholder-answer">
+            <p>?</p>
+          </div>
           }
         </div>
-        } @else {
-        <mat-form-field appearance="fill" class="full-width">
-          <mat-label>{{ mode() === 'JP-EN' ? 'Translation' : 'Japanese' }}</mat-label>
-          <input matInput #userInputField [value]="userInput()" (input)="userInput.set($any($event.target).value)"
-            (keyup.enter)="checkAnswer()" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
-        </mat-form-field>
-
-        @if (feedback()) {
-        <div class="feedback" [class.correct]="feedback()?.correct" [class.incorrect]="!feedback()?.correct">
-          {{ feedback()?.message }}
-        </div>
-        }
-        }
       </mat-card-content>
 
       <mat-card-actions class="card-actions">
-
-
         <span class="spacer"></span>
-
-        @if (isReviewMode()) {
-        <button mat-flat-button #nextButton color="primary" (click)="nextWord()">NEXT</button>
-        } @else {
-        @if (!feedback()) {
-        <button mat-flat-button color="primary" (click)="checkAnswer()" [disabled]="!isInputValid()">CHECK</button>
+        @if (!isRevealed()) {
+        <button mat-flat-button color="primary" (click)="isRevealed.set(true)">REVEAL</button>
         } @else {
         <button mat-flat-button #nextButton color="primary" (click)="nextWord()">NEXT</button>
-        }
         }
       </mat-card-actions>
       <div class="stats">

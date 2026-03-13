@@ -1,13 +1,21 @@
+import { describe, it, expect, beforeEach } from 'vitest';
 import { TestBed } from '@angular/core/testing';
+import { provideHttpClient } from '@angular/common/http';
+import { provideHttpClientTesting } from '@angular/common/http/testing';
+import { VocabService } from './vocab';
 
-import { Vocab } from './vocab';
-
-describe('Vocab', () => {
-  let service: Vocab;
+describe('VocabService', () => {
+  let service: VocabService;
 
   beforeEach(() => {
-    TestBed.configureTestingModule({});
-    service = TestBed.inject(Vocab);
+    TestBed.configureTestingModule({
+      providers: [
+        provideHttpClient(),
+        provideHttpClientTesting(),
+        VocabService
+      ]
+    });
+    service = TestBed.inject(VocabService);
   });
 
   it('should be created', () => {
