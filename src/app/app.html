@@ -1,9 +1,13 @@
 <mat-toolbar color="primary">
   <span>JP Practice</span>
   <span class="spacer"></span>
-  <mat-slide-toggle [checked]="isRandomMode()" (change)="isRandomMode.set($event.checked)" class="toolbar-toggle">
+  <mat-slide-toggle [checked]="settings.isRandomMode()" (change)="settings.isRandomMode.set($event.checked)"
+    class="toolbar-toggle">
     Random
   </mat-slide-toggle>
+  <button mat-icon-button (click)="openSettings()" aria-label="Settings">
+    <mat-icon>settings</mat-icon>
+  </button>
 </mat-toolbar>
 
 <div class="container">
@@ -15,7 +19,7 @@
           Current Word ({{ currentWord()?.group }})
         </mat-card-subtitle>
         <mat-card-title>
-          @if (mode() === 'JP-EN') {
+          @if (settings.mode() === 'JP-EN') {
           <h1>{{ currentWord()?.japaneseForm }}</h1>
           } @else {
           <h1>{{ currentWord()?.meaning }}</h1>
@@ -28,7 +32,7 @@
           @if (isRevealed()) {
           <div class="review-answer">
             <p class="answer-label">Answer:</p>
-            @if (mode() === 'JP-EN') {
+            @if (settings.mode() === 'JP-EN') {
             <p class="answer-text">{{ currentWord()?.meaning }}</p>
             } @else {
             <p class="answer-text">{{ currentWord()?.japaneseForm }}</p>
@@ -65,50 +69,4 @@
     }
   </div>
   }
-
-  <mat-expansion-panel class="settings-panel" [expanded]="showSettings()" (expandedChange)="showSettings.set($event)">
-    <mat-expansion-panel-header>
-      <mat-panel-title>
-        <mat-icon>settings</mat-icon>
-        <span class="settings-title">Settings</span>
-      </mat-panel-title>
-      <mat-panel-description>
-        {{ mode() === 'JP-EN' ? 'JP to EN' : 'EN to JP' }} |
-        {{ selectedLesson() === 'all' ? 'All Lessons' : (lessonRangeMode() === 'up-to' ? 'Up to L' + selectedLesson() :
-        'L' + selectedLesson()) }}
-      </mat-panel-description>
-    </mat-expansion-panel-header>
-
-    <div class="controls">
-      <div class="control-row">
-        <mat-form-field appearance="outline">
-          <mat-label>Practice Mode</mat-label>
-          <mat-select [value]="mode()" (selectionChange)="mode.set($event.value)">
-            <mat-option value="JP-EN">Japanese to English</mat-option>
-            <mat-option value="EN-JP">English to Japanese</mat-option>
-          </mat-select>
-        </mat-form-field>
-      </div>
-
-      <div class="control-row lesson-row">
-        <mat-form-field appearance="outline" class="lesson-select">
-          <mat-label>Lesson</mat-label>
-          <mat-select [value]="selectedLesson()" (selectionChange)="selectedLesson.set($event.value)">
-            <mat-option value="all">All Lessons</mat-option>
-            @for (lesson of lessons(); track lesson) {
-            <mat-option [value]="lesson">Lesson {{ lesson }}</mat-option>
-            }
-          </mat-select>
-        </mat-form-field>
-
-        @if (selectedLesson() !== 'all') {
-        <mat-button-toggle-group [value]="lessonRangeMode()" (change)="lessonRangeMode.set($event.value)"
-          aria-label="Lesson Range">
-          <mat-button-toggle value="exact">Only</mat-button-toggle>
-          <mat-button-toggle value="up-to">Up to</mat-button-toggle>
-        </mat-button-toggle-group>
-        }
-      </div>
-    </div>
-  </mat-expansion-panel>
 </div>

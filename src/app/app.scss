@@ -4,50 +4,6 @@
   margin: 0 auto;
 }
 
-.settings-panel {
-  margin-bottom: 1.5rem;
-  border-radius: 12px !important;
-  box-shadow: none !important;
-  border: 1px solid var(--outline-variant);
-
-  mat-panel-title {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    font-weight: 500;
-  }
-
-  .settings-title {
-    margin-right: 16px;
-  }
-}
-
-.controls {
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-  padding: 1rem 0;
-}
-
-.control-row {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-  flex-wrap: wrap;
-
-  mat-form-field {
-    flex: 1;
-    min-width: 200px;
-  }
-}
-
-.lesson-row {
-  mat-button-toggle-group {
-    height: 56px;
-    margin-bottom: 22px; // Align with mat-form-field outline
-  }
-}
-
 .practice-area {
   display: flex;
   flex-direction: column;
@@ -152,21 +108,6 @@ h1 {
 @media (max-width: 480px) {
   .container {
     padding: 0.5rem;
-  }
-
-  .control-row {
-    flex-direction: column;
-    align-items: stretch;
-    gap: 0;
-
-    mat-form-field {
-      width: 100%;
-    }
-
-    mat-button-toggle-group {
-      width: 100%;
-      margin-bottom: 16px;
-    }
   }
 
   .card-actions {

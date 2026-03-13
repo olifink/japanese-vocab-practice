@@ -33,10 +33,10 @@ describe('App', () => {
     expect(app).toBeTruthy();
   });
 
-  it('should have Japanese Vocab Practice in the toolbar', () => {
+  it('should have JP Practice in the toolbar', () => {
     const fixture = TestBed.createComponent(App);
     fixture.detectChanges();
     const compiled = fixture.nativeElement as HTMLElement;
-    expect(compiled.querySelector('mat-toolbar span')?.textContent).toContain('Japanese Vocab Practice');
+    expect(compiled.querySelector('mat-toolbar span')?.textContent).toContain('JP Practice');
   });
 });
