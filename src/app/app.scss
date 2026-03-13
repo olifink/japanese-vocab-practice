@@ -1,20 +1,69 @@
+:host {
+  display: flex;
+  flex-direction: column;
+  min-height: 100dvh;
+}
+
 .container {
   padding: 1rem;
   max-width: 600px;
+  width: 100%; // Ensure it doesn't shrink-wrap
   margin: 0 auto;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
 }
 
 .practice-area {
+  flex: 1;
   display: flex;
   flex-direction: column;
+  justify-content: center;
   align-items: center;
+  width: 100%;
 }
 
 .verb-card {
-  width: 100%;
-  margin-bottom: 1rem;
+  width: 100%; // Fill the container width (600px max)
+  min-height: 60vh;
+  display: flex;
+  flex-direction: column;
   padding: 1rem;
-  border-radius: 28px; // M3 expressive style
+  border-radius: 28px;
+  box-sizing: border-box;
+
+  ::ng-deep .mat-mdc-card-header {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 0;
+
+    .mat-mdc-card-header-text {
+      margin: 0;
+      width: 100%;
+      text-align: center;
+    }
+  }
+
+  ::ng-deep .mat-mdc-card-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 100%;
+    padding: 1rem 0;
+  }
+}
+
+.answer-section {
+  width: 100%;
+  min-height: 160px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  box-sizing: border-box;
 }
 
 .card-actions {
@@ -52,7 +101,11 @@ h1 {
   padding: 1.5rem;
   background-color: var(--surface-container-high);
   border-radius: 16px;
-  margin: 1rem 0;
+  margin: 0;
+  min-height: 120px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 
   .answer-label {
     font-size: 0.9rem;
@@ -75,8 +128,12 @@ h1 {
   padding: 1.5rem;
   background-color: var(--surface-container-low);
   border-radius: 16px;
-  margin: 1rem 0;
+  margin: 0;
   border: 2px dashed var(--outline-variant);
+  min-height: 120px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 
   p {
     font-size: 2.5rem;
@@ -98,6 +155,10 @@ h1 {
   padding: 3rem;
   color: var(--on-surface);
   opacity: 0.7;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 .spacer {
