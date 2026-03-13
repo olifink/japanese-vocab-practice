@@ -54,11 +54,11 @@
         <button mat-flat-button #nextButton color="primary" (click)="nextWord()">NEXT</button>
         }
       </mat-card-actions>
-      <div class="stats">
-        Word {{ (currentVerbIndex() % filteredVocab().length) + 1 }} of {{ filteredVocab().length }} (Lesson {{
-        currentWord()?.lesson }})
-      </div>
     </mat-card>
+    <div class="stats">
+      Word {{ (currentVerbIndex() % filteredVocab().length) + 1 }} of {{ filteredVocab().length }} (Lesson {{
+      currentWord()?.lesson }})
+    </div>
   </div>
   } @else {
   <div class="loading">
