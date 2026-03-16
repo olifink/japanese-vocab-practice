@@ -20,7 +20,12 @@
         </mat-card-subtitle>
         <mat-card-title>
           @if (settings.mode() === 'JP-EN') {
-          <h1>{{ currentWord()?.japaneseForm }}</h1>
+          <div class="japanese-display">
+            <h1>{{ currentWord()?.japaneseForm }}</h1>
+            <button mat-icon-button (click)="speak(currentWord()?.japaneseForm)" aria-label="Speak Japanese pronunciation">
+              <mat-icon>volume_up</mat-icon>
+            </button>
+          </div>
           } @else {
           <h1>{{ currentWord()?.meaning }}</h1>
           }
@@ -35,7 +40,12 @@
             @if (settings.mode() === 'JP-EN') {
             <p class="answer-text">{{ currentWord()?.meaning }}</p>
             } @else {
-            <p class="answer-text">{{ currentWord()?.japaneseForm }}</p>
+            <div class="japanese-display">
+              <p class="answer-text">{{ currentWord()?.japaneseForm }}</p>
+              <button mat-icon-button (click)="speak(currentWord()?.japaneseForm)" aria-label="Speak Japanese pronunciation">
+                <mat-icon>volume_up</mat-icon>
+              </button>
+            </div>
             }
           </div>
           } @else {
