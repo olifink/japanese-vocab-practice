@@ -1,158 +1,109 @@
-group,ます-form,dictionary form,て-form,ない-form,た-form,meaning,lesson
-I,あいます,あう,あって,あわない,あった,meet (a friend),6
-I,あそびます,あそぶ,あそんで,あそばない,あそんだ,"enjoy oneself, play",13
-I,あらいます,あらう,あらって,あらわない,あらった,wash,18
-I,あります,ある,あって,ない,あった,have,18
-I,あります,ある,あって,ない,あった,"exist, be (referring to inanimate things)",9
-I,あります,ある,あって,ない,あった,"(a festival) be held, take place",10
-I,あるきます,あるく,あるいて,あるかない,あるいた,walk,21
-I,いいます,いう,いって,いわない,いった,say,23
-I,いきます,いく,いって,いかない,いった,go,21
-I,いそぎます,いそぐ,いそいで,いそがない,いそいだ,hurry,5
-I,いります,いる,いって,いらない,いった,"need, require (a visa)",14
-I,うごきます,うごく,うごいて,うごかない,うごいた,"move, work",20
-I,うたいます,うたう,うたって,うたわない,うたった,sing,21
-I,うります,うる,うって,うらない,うった,sell,18
-I,おきます,おく,おいて,おかない,おいた,put,15
-I,おくります,おくる,おくって,おくらない,おくった,send,15
-I,おくります,おくる,おくって,おくらない,おくった,"escort (someone), go with",7
-I,おします,おす,おして,おさない,おした,"push, press",24
-I,おもいだします,おもいだす,おもいだして,おもいださない,おもいだした,"remember, recollect",16
-I,おもいます,おもう,おもって,おもわない,おもった,think,15
-I,およぎます,およぐ,およいで,およがない,およいだ,swim,21
-I,おろします,おろす,おろして,おろさない,おろした,withdraw,13
-I,おわります,おわる,おわって,おわらない,おわった,finish,16
-I,かいます,かう,かって,かわない,かった,buy,4
-I,かえします,かえす,かえして,かえさない,かえした,"give back, return",6
-I,かえります,かえる,かえって,かえらない,かえった,"go home, return",5
-I,かかります,かかる,かかって,かからない,かかった,"take, cost (referring to time or money)",11
-I,かきます,かく,かいて,かかない,かいた,"write, draw, paint",6
-I,かします,かす,かして,かさない,かした,lend,7
-I,かちます,かつ,かって,かたない,かった,win,21
-I,かぶります,かぶる,かぶって,かぶらない,かぶった,"put on (a hat, etc.)",22
-I,がんばります,がんばる,がんばって,がんばらない,がんばった,do one's best,25
-I,ききます,きく,きいて,きかない,きいた,"hear, listen",6
-I,ききます,きく,きいて,きかない,きいた,ask (the teacher),23
-I,きります,きる,きって,きらない,きった,"cut, slice",7
-I,けします,けす,けして,けさない,けした,turn off,14
-I,さわります,さわる,さわって,さわらない,さわった,touch (a door),23
-I,しります,しる,しって,しらない,しった,get to know,15
-I,すいます,すう,すって,すわない,すった,smoke (a cigarette),15
-I,すみます,すむ,すんで,すまない,すんだ,be going to live,6
-I,すわります,すわる,すわって,すわらない,すわった,sit down,15
-I,だします,だす,だして,ださない,だした,"take out, hand in, send",14
-I,たちます,たつ,たって,たたない,たった,stand up,16
-I,つかいます,つかう,つかって,つかわない,つかった,use,14
-I,つきます,つく,ついて,つかない,ついた,arrive,14
-I,つくります,つくる,つくって,つくらない,つくった,"make, produce",25
-I,つれていきます,つれていく,つれていって,つれていかない,つれていった,take (someone),15
-I,てつだいます,てつだう,てつだって,てつだわない,てつだった,help (with a task),24
-I,とまります,とまる,とまって,とまらない,とまった,stay (at a hotel),14
-I,とります,とる,とって,とらない,とった,"take, pass",19
-I,とります,とる,とって,とらない,とった,take (a photograph),14
-I,とります,とる,とって,とらない,とった,grow old,6
-I,なおします,なおす,なおして,なおさない,なおした,"repair, correct",25
-I,なくします,なくす,なくして,なくさない,なくした,lose,24
-I,ならいます,ならう,ならって,ならわない,ならった,learn,17
-I,なります,なる,なって,ならない,なった,become,7
-I,ぬぎます,ぬぐ,ぬいで,ぬがない,ぬいだ,"take off (clothes, shoes, etc.)",19
-I,のぼります,のぼる,のぼって,のぼらない,のぼった,"climb, go up",17
-I,のみます,のむ,のんで,のまない,のんだ,drink,19
-I,のみます,のむ,のんで,のまない,のんだ,drink alcohol,6
-I,のみます,のむ,のんで,のまない,のんだ,take (medicine),16
-I,のります,のる,のって,のらない,のった,"ride, get on (a train)",17
-I,はいります,はいる,はいって,はいらない,はいった,enter (a café),14
-I,はいります,はいる,はいって,はいらない,はいった,enter (university),16
-I,はいります,はいる,はいって,はいらない,はいった,take (a bath),17
-I,はきます,はく,はいて,はかない,はいた,"put on (shoes, trousers, etc.)",22
-I,はたらきます,はたらく,はたらいて,はたらかない,はたらいた,work,4
-I,はなします,はなす,はなして,はなさない,はなした,"speak, talk",14
-I,はらいます,はらう,はらって,はらわない,はらった,pay,17
-I,ひきます,ひく,ひいて,ひかない,ひいた,"play (stringed instrument, piano, etc.)",18
-I,ひきます,ひく,ひいて,ひかない,ひいた,pull,23
-I,ふります,ふる,ふって,ふらない,ふった,rain,14
-I,まがります,まがる,まがって,まがらない,まがった,turn (to the right),23
-I,まちます,まつ,まって,またない,まった,wait,23
-I,まわします,まわす,まわして,まわさない,まわした,turn,14
-I,もちます,もつ,もって,もたない,もった,hold,23
-I,もっていきます,もっていく,もっていって,もっていかない,もっていった,take (something),14
-I,もらいます,もらう,もらって,もらわない,もらった,receive,17
-I,やくにたちます,やくにたつ,やくにたって,やくにたたない,やくにたった,be useful,7
-I,やすみます,やすむ,やすんで,やすまない,やすんだ,"take a rest, take a holiday",21
-I,やすみます,やすむ,やすんで,やすまない,やすんだ,take a day off (work),4
-I,よびます,よぶ,よんで,よばない,よんだ,call,11
-I,よみます,よむ,よんで,よまない,よんだ,read,14
-I,わかります,わかる,わかって,わからない,わかった,understand,6
-I,わたります,わたる,わたって,わたらない,わたった,cross (a bridge),23
-II,あけます,あける,あけて,あけない,あけた,open,14
-II,あげます,あげる,あげて,あげない,あげた,give,7
-II,あつめます,あつめる,あつめて,あつめない,あつめた,"collect, gather",18
-II,あびます,あびる,あびて,あびない,あびた,take (a shower),16
-II,います,いる,いて,いない,いた,"exist, be (referring to animate things)",16
-II,います,いる,いて,いない,いた,have (a child),10
-II,います,いる,いて,いない,いた,"stay, be (in Japan)",11
-II,いれます,いれる,いれて,いれない,いれた,"put in, insert",11
-II,うまれます,うまれる,うまれて,うまれない,うまれた,be born,16
-II,おきます,おきる,おきて,おきない,おきた,"get up, wake up",22
-II,おしえます,おしえる,おしえて,おしえない,おしえた,teach,4
-II,おしえます,おしえる,おしえて,おしえない,おしえた,tell (an address),7
-II,おぼえます,おぼえる,おぼえて,おぼえない,おぼえた,memorise,14
-II,おります,おりる,おりて,おりない,おりた,get off (a train),17
-II,かえます,かえる,かえて,かえない,かえた,"exchange, change",16
-II,かえます,かえる,かえて,かえない,かえた,change,18
-II,かけます,かける,かけて,かけない,かけた,make (a telephone call),23
-II,かけます,かける,かけて,かけない,かけた,put on (glasses),7
-II,かります,かりる,かりて,かりない,かりた,borrow,22
-II,かんがえます,かんがえる,かんがえて,かんがえない,かんがえた,"think, consider",7
-II,きます,きる,きて,きない,きた,"put on (a shirt, etc.)",25
-II,きをつけます,きをつける,きをつけて,きをつけない,きをつけた,"pay attention, take care",22
-II,くれます,くれる,くれて,くれない,くれた,give (me),21
-II,しめます,しめる,しめて,しめない,しめた,"close, shut",24
-II,しらべます,しらべる,しらべて,しらべない,しらべた,"check, investigate",14
-II,すてます,すてる,すてて,すてない,すてた,throw away,20
-II,たべます,たべる,たべて,たべない,たべた,eat,18
-II,たります,たりる,たりて,たりない,たりた,"be enough, be sufficient",6
-II,つかれます,つかれる,つかれて,つかれない,つかれた,get tired,25
-II,つけます,つける,つけて,つけない,つけた,turn on,13
-II,でかけます,でかける,でかけて,でかけない,でかけた,go out,14
-II,できます,できる,できて,できない,できた,"be able to, can",17
-II,でます,でる,でて,でない,でた,(change) come out,23
-II,でます,でる,でて,でない,でた,go out (of a café),14
-II,でます,でる,でて,でない,でた,graduate from (university),16
-II,とめます,とめる,とめて,とめない,とめた,"stop, park",14
-II,ねます,ねる,ねて,ねない,ねた,"sleep, go to bed",4
-II,のりかえます,のりかえる,のりかえて,のりかえない,のりかえた,"change (train, etc.)",16
-II,はじめます,はじめる,はじめて,はじめない,はじめた,"start, begin",16
-II,まけます,まける,まけて,まけない,まけた,"lose, be beaten",16
-II,みせます,みせる,みせて,みせない,みせた,show,21
-II,みます,みる,みて,みない,みた,"see, look at, watch",14
-II,むかえます,むかえる,むかえて,むかえない,むかえた,"go to meet, welcome",6
-II,やめます,やめる,やめて,やめない,やめた,quit or retire from (a company),13
-II,やめます,やめる,やめて,やめない,やめた,"stop, give up",21
-II,わすれます,わすれる,わすれて,わすれない,わすれた,forget,17
-III,あんないします,あんないする,あんないして,あんないしない,あんないした,"show around, show the way",24
-III,うんてんします,うんてんする,うんてんして,うんてんしない,うんてんした,drive,18
-III,かいものします,かいものする,かいものして,かいものしない,かいものした,do shopping,18
-III,きます,くる,きて,こない,きた,come,13
-III,けっこんします,けっこんする,けっこんして,けっこんしない,けっこんした,"marry, get married",5
-III,けんがくします,けんがくする,けんがくして,けんがくしない,けんがくした,"tour, visit a place to study it",13
-III,けんきゅうします,けんきゅうする,けんきゅうして,けんきゅうしない,けんきゅうした,do research,16
-III,コピーします,コピーする,コピーして,コピーしない,コピーした,copy,15
-III,さんぽします,さんぽする,さんぽして,さんぽしない,さんぽした,take a walk (in a park),14
-III,ざんぎょうします,ざんぎょうする,ざんぎょうして,ざんぎょうしない,ざんぎょうした,work overtime,13
-III,します,する,して,しない,した,"do, play",17
-III,します,する,して,しない,した,put on (tie),6
-III,しゅうりします,しゅうりする,しゅうりして,しゅうりしない,しゅうりした,repair,22
-III,しゅっちょうします,しゅっちょうする,しゅっちょうして,しゅっちょうしない,しゅっちょうした,go on a business trip,20
-III,しょうかいします,しょうかいする,しょうかいして,しょうかいしない,しょうかいした,introduce,17
-III,しょくじします,しょくじする,しょくじして,しょくじしない,しょくじした,"have a meal, dine",24
-III,しんぱいします,しんぱいする,しんぱいして,しんぱいしない,しんぱいした,worry,13
-III,せつめいします,せつめいする,せつめいして,せつめいしない,せつめいした,explain,17
-III,せんたくします,せんたくする,せんたくして,せんたくしない,せんたくした,wash (clothes),24
-III,そうじします,そうじする,そうじして,そうじしない,そうじした,clean (a room),19
-III,つれてきます,つれてくる,つれてきて,つれてこない,つれてきた,bring (someone),24
-III,でんわします,でんわする,でんわして,でんわしない,でんわした,phone,16
-III,べんきょうします,べんきょうする,べんきょうして,べんきょうしない,べんきょうした,study,4
-III,もってきます,もってくる,もってきて,もってこない,もってきた,bring (something),17
-III,よやくします,よやくする,よやくして,よやくしない,よやくした,"reserve, book",18
-III,りゅうがくします,りゅうがくする,りゅうがくして,りゅうがくしない,りゅうがくした,study abroad,21
+lesson,group,N/A/Vます-form,meaning,dictionary form,て-form,ない-form,た-form
+12,Adj (na),かんたん［な］,easy,,,,
+12,Adj (i),ちがい,near,,,,
+12,Adj (i),とおい,far,,,,
+12,Adj (i),はやい,"fast, early",,,,
+12,Adj (i),おそい,"slow, late",,,,
+12,Adj (i),おおい［ひとが～］,"many [people], much",,,,
+12,Adj (i),すくない　［ひとが～］,"few [people], a little",,,,
+12,Adj (i),あたたかい,warm,,,,
+12,Adj (i),すずしい,cool,,,,
+12,Adj (i),あまい,sweet,,,,
+12,Adj (i),からい,"hot (taste), spicy",,,,
+12,Adj (i),おもい,heavy,,,,
+12,Adj (i),かるい,light,,,,
+12,Adj (i),いい［コーヒーが～］,prefer [coffee],,,,
+12,N,きせつ,season,,,,
+12,N,はる,spring,,,,
+12,N,なつ,summer,,,,
+12,N,あき,"autumn, fall",,,,
+12,N,ふゆ,winter,,,,
+12,N,てんき,weather,,,,
+12,N,あめ,"rain, rainy",,,,
+12,N,ゆき,"snow, snowy",,,,
+12,N,くもり,cloudy,,,,
+12,N,ホテル,hotel,,,,
+12,N,くうこう,airport,,,,
+12,N,うみ,"sea, ocean",,,,
+12,N,せかい,world,,,,
+12,N,パーティー,party,,,,
+12,N,［お］まつり,festival,,,,
+12,N,すきやき,sukiyaki (beef and vegetable hot pot),,,,
+12,N,さしみ,sashimi (sliced raw fish),,,,
+12,N,てんぷら,tempura (seafood and vegetables deep fried in batter),,,,
+12,N,ぶたにく,pork,,,,
+12,N,とりにく,chicken,,,,
+12,N,ぎゅうにく,beef,,,,
+12,N,レモン,lemon,,,,
+12,N,いけばな,flower arrangement,,,,
+12,N,もみじ,"maple, red leaves of autumn",,,,
+12,Adv,どちら,which one (of two things),,,,
+12,N,どちらも,both,,,,
+12,N,いちばん,the most,,,,
+12,N,ずっと,by far,,,,
+12,N,はじめて,for the first time,,,,
+19,V (I),のぼります,"climb, go up",,,,
+19,V (I),とまります［ホテルに～］,stay [at a hotel],,,,
+19,V (III),そうじします,clean (a room),,,,
+19,V (III),せんたくします,wash (clothes),,,,
+19,V (I),なります,become,,,,
+19,Adj (i),ねむい,sleepy,,,,
+19,Adj (i),つよい,strong,,,,
+19,Adj (i),よわい,weak,,,,
+19,N,れんしゅう,practice,,,,
+19,N,ゴルフ,golf,,,,
+19,N,すもう,sumo wrestling,,,,
+19,N,おちゃ,tea ceremony,,,,
+19,N,ひ,day,,,,
+19,N,ちょうし,condition,,,,
+19,Adv,いちど,once,,,,
+19,Adv,いちども,"not once, never (used with negatives)",,,,
+19,Adv,だんだん,gradually,,,,
+19,Adv,もうすぐ,soon,,,,
+19,Phrase,おかげさます,Thank you (for help received),,,,
+19,Conj,でも,but,,,,
+20,V (I),いります ［ビザが～］,"need, require [a visa]",,,,
+20,V (II),しらべます,"check, investigate",,,,
+20,V (III),しゅうりします,repair,,,,
+20,N,ことば,"word, language",,,,
+20,N,はじめ,the beginning,,,,
+20,N,おわり,the end,,,,
+20,Conj,～けど,but (informal form of が),,,,
+20,Phrase,よかったら,if you like,,,,
+20,Adj (na),いろいろ,various,,,,
+21,V (I),おもいます,think,,,,
+,V (I),いいます,say,,,,
+,V (I),かちます,win,,,,
+,V (II),まけます,"lose, be beaten",,,,
+,V (I),あります　［おまつりが～］,"[a festival] be held, take place",,,,
+,V (I),やくにたちます,be useful,,,,
+,V (I),うごきます,"move, work",,,,
+,V (II),やめます　［かいしゃを～］,"quit or retire from [a company], stop, give up",,,,
+,V (II),りゅうがこします,study abroad,,,,
+,Adj (na),むだ‘,wasteful,,,,
+,Adj (na),ふべん,inconvenient,,,,
+,Adj (i),すごい,"awful, great",,,,
+,N,ほんとう,true,,,,
+,N,うそ,lie,,,,
+,N,うそき,liar,,,,
+,N,じどうしゃ,"car, automobile",,,,
+,N,こうつう,"transport, traffic",,,,
+,N,ぶっか,[commodity] prices,,,,
+,N,ほうそう,"announcement, broadcast",,,,
+,N,ニュース,news,,,,
+,N,アニメ,anime,,,,
+,N,マンガ,manga,,,,
+,N,デザイン,"design, artwork",,,,
+,N,ゆめ,dream,,,,
+,N,てんさい,genius,,,,
+,N,しあい,"game, match",,,,
+,N,いけん,opinion,,,,
+,N,はなし,"talk, speech, what one says, story",,,,
+,N,ちきゅう,earth,,,,
+,N,つき,moon,,,,
+,Adv,さいきん,"recently, these days",,,,
+,Adv,たぶん,"probably, perhaps, maybe",,,,
+,Adv,きっと,"surely, definitely",,,,
+,Adv,ほんとうに,really,,,,
+,Adv,そんなに,not so (used with negatives),,,,
+,Adv,～について,"about ~, concerning ~",,,,
