@@ -75,6 +75,9 @@
         <span class="spacer"></span>
         <button mat-flat-button #nextButton color="primary" (click)="nextWord()">NEXT</button>
       </mat-card-actions>
+      <p class="shadow-config-hint" aria-live="polite">
+        Pause {{ settings.shadowPauseMs() }}ms • Repeats {{ settings.shadowRepeatLoop() }}x
+      </p>
       } @else {
       <mat-card-header>
         <mat-card-subtitle>

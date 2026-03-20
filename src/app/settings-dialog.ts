@@ -39,6 +39,34 @@ import { computed } from '@angular/core';
         </mat-form-field>
       </div>
 
+      @if (settings.mode() === 'CONJUGATION-SHADOW') {
+      <div class="control-row">
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Pause Between Forms</mat-label>
+          <mat-select [value]="settings.shadowPauseMs()" (selectionChange)="settings.shadowPauseMs.set($event.value)">
+            <mat-option [value]="0">No pause</mat-option>
+            <mat-option [value]="400">0.4s</mat-option>
+            <mat-option [value]="700">0.7s</mat-option>
+            <mat-option [value]="1000">1.0s</mat-option>
+            <mat-option [value]="1300">1.3s</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+
+      <div class="control-row">
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Repeat Full Sequence</mat-label>
+          <mat-select [value]="settings.shadowRepeatLoop()" (selectionChange)="settings.shadowRepeatLoop.set($event.value)">
+            <mat-option [value]="1">1 time</mat-option>
+            <mat-option [value]="2">2 times</mat-option>
+            <mat-option [value]="3">3 times</mat-option>
+            <mat-option [value]="4">4 times</mat-option>
+            <mat-option [value]="5">5 times</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      }
+
       @if (settings.mode() !== 'CONJUGATION-SHADOW') {
       <div class="control-row lesson-row">
         <mat-form-field appearance="outline" class="lesson-select">

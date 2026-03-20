@@ -37,6 +37,7 @@ export class App {
 
   currentVerbIndex = signal<number>(0);
   isRevealed = signal<boolean>(false);
+  private shadowPlaybackRequestId = 0;
 
   filteredVocab = computed(() => {
     const allVocab = this.vocab();
@@ -86,17 +87,52 @@ export class App {
 
   speak(text: string | undefined): void {
     if (!text || !('speechSynthesis' in window)) return;
+    this.shadowPlaybackRequestId += 1;
     speechSynthesis.cancel();
     const utterance = new SpeechSynthesisUtterance(text);
     utterance.lang = 'ja-JP';
     speechSynthesis.speak(utterance);
   }
 
-  speakConjugationForms(): void {
+  private wait(ms: number): Promise<void> {
+    return new Promise(resolve => setTimeout(resolve, ms));
+  }
+
+  private speakUtterance(text: string): Promise<void> {
+    return new Promise((resolve) => {
+      const utterance = new SpeechSynthesisUtterance(text);
+      utterance.lang = 'ja-JP';
+      utterance.onend = () => resolve();
+      utterance.onerror = () => resolve();
+      speechSynthesis.speak(utterance);
+    });
+  }
+
+  async speakConjugationForms(): Promise<void> {
     const item = this.currentConjugation();
-    if (!item) return;
-    const phrase = `${item.dictionaryForm}。${item.negativeForm}。${item.pastForm}。${item.teForm}`;
-    this.speak(phrase);
+    if (!item || !('speechSynthesis' in window)) return;
+
+    this.shadowPlaybackRequestId += 1;
+    const requestId = this.shadowPlaybackRequestId;
+    speechSynthesis.cancel();
+
+    const forms = [item.dictionaryForm, item.negativeForm, item.pastForm, item.teForm].filter(Boolean);
+    const pauseMs = this.settings.shadowPauseMs();
+    const repeatCount = this.settings.shadowRepeatLoop();
+
+    for (let repeatIndex = 0; repeatIndex < repeatCount; repeatIndex += 1) {
+      for (let formIndex = 0; formIndex < forms.length; formIndex += 1) {
+        if (this.shadowPlaybackRequestId !== requestId) {
+          return;
+        }
+
+        await this.speakUtterance(forms[formIndex]);
+
+        if (pauseMs > 0 && (formIndex < forms.length - 1 || repeatIndex < repeatCount - 1)) {
+          await this.wait(pauseMs);
+        }
+      }
+    }
   }
 
   openSettings() {
@@ -106,6 +142,11 @@ export class App {
   }
 
   nextWord() {
+    this.shadowPlaybackRequestId += 1;
+    if ('speechSynthesis' in window) {
+      speechSynthesis.cancel();
+    }
+
     const list = this.settings.mode() === 'CONJUGATION-SHADOW'
       ? this.verbConjugations()
       : this.filteredVocab();
