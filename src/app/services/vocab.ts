@@ -36,6 +36,17 @@ export class VocabService {
     return row[key]?.trim() ?? '';
   }
 
+  private getFirstAvailableValue(row: Record<string, string>, keys: string[]): string {
+    for (const key of keys) {
+      const value = this.getValue(row, key);
+      if (value !== '') {
+        return value;
+      }
+    }
+
+    return '';
+  }
+
   private parseLessonValue(rawLesson: string): LessonValue {
     const numericLesson = Number(rawLesson);
     if (!Number.isNaN(numericLesson) && rawLesson !== '') {
@@ -53,7 +64,7 @@ export class VocabService {
       complete: (results) => {
         const parsed: VocabItem[] = results.data.map((row) => ({
           group: this.getValue(row, 'group'),
-          japaneseForm: this.getValue(row, 'N/A/Vます-form'),
+          japaneseForm: this.getFirstAvailableValue(row, ['word', 'N/A/Vます-form']),
           dictionaryForm: this.getValue(row, 'dictionary form'),
           teForm: this.getValue(row, 'て-form'),
           naiForm: this.getValue(row, 'ない-form'),
