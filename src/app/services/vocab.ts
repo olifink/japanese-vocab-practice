@@ -55,26 +55,33 @@ export class VocabService {
     return rawLesson;
   }
 
-  async loadVocab(): Promise<void> {
-    const csvData = await firstValueFrom(this.http.get('lessons.csv', { responseType: 'text' }));
-
-    Papa.parse<Record<string, string>>(csvData, {
+  private parseVocabCsv(csvData: string): VocabItem[] {
+    const results = Papa.parse<Record<string, string>>(csvData, {
       header: true,
-      skipEmptyLines: true,
-      complete: (results) => {
-        const parsed: VocabItem[] = results.data.map((row) => ({
-          group: this.getValue(row, 'group'),
-          japaneseForm: this.getFirstAvailableValue(row, ['word', 'N/A/Vます-form']),
-          dictionaryForm: this.getValue(row, 'dictionary form'),
-          teForm: this.getValue(row, 'て-form'),
-          naiForm: this.getValue(row, 'ない-form'),
-          taForm: this.getValue(row, 'た-form'),
-          meaning: this.getValue(row, 'meaning'),
-          lesson: this.parseLessonValue(this.getValue(row, 'lesson'))
-        }));
-        this.vocab.set(parsed);
-      }
+      skipEmptyLines: true
     });
+
+    return results.data.map((row) => ({
+      group: this.getValue(row, 'group'),
+      japaneseForm: this.getFirstAvailableValue(row, ['word', 'N/A/Vます-form']),
+      dictionaryForm: this.getValue(row, 'dictionary form'),
+      teForm: this.getValue(row, 'て-form'),
+      naiForm: this.getValue(row, 'ない-form'),
+      taForm: this.getValue(row, 'た-form'),
+      meaning: this.getValue(row, 'meaning'),
+      lesson: this.parseLessonValue(this.getValue(row, 'lesson'))
+    }));
+  }
+
+  async loadVocab(): Promise<void> {
+    const [lessonsCsvData, phrasesCsvData] = await Promise.all([
+      firstValueFrom(this.http.get('lessons.csv', { responseType: 'text' })),
+      firstValueFrom(this.http.get('phrases.csv', { responseType: 'text' }))
+    ]);
+
+    const parsedLessons = this.parseVocabCsv(lessonsCsvData);
+    const parsedPhrases = this.parseVocabCsv(phrasesCsvData);
+    this.vocab.set([...parsedLessons, ...parsedPhrases]);
   }
 
   async loadVerbConjugations(): Promise<void> {
