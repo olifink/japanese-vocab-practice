@@ -24,12 +24,16 @@ export interface VerbConjugationItem {
   teForm: string;
 }
 
+// Adjectives share the same conjugation structure as verbs
+export type AdjectiveItem = VerbConjugationItem;
+
 @Injectable({
   providedIn: 'root'
 })
 export class VocabService {
   private vocab = signal<VocabItem[]>([]);
   private verbConjugations = signal<VerbConjugationItem[]>([]);
+  private adjectives = signal<AdjectiveItem[]>([]);
   private http = inject(HttpClient);
 
   private getValue(row: Record<string, string>, key: string): string {
@@ -84,23 +88,28 @@ export class VocabService {
     this.vocab.set([...parsedLessons, ...parsedPhrases]);
   }
 
+  private parseConjugationCsv(csvData: string): VerbConjugationItem[] {
+    const results = Papa.parse<Record<string, string>>(csvData, {
+      header: true,
+      skipEmptyLines: true
+    });
+    return results.data.map((row) => ({
+      english: this.getValue(row, 'English'),
+      dictionaryForm: this.getValue(row, 'DictionaryForm'),
+      negativeForm: this.getValue(row, 'NegativeForm'),
+      pastForm: this.getValue(row, 'PastForm'),
+      teForm: this.getValue(row, 'TeForm')
+    }));
+  }
+
   async loadVerbConjugations(): Promise<void> {
     const csvData = await firstValueFrom(this.http.get('verbs.csv', { responseType: 'text' }));
+    this.verbConjugations.set(this.parseConjugationCsv(csvData));
+  }
 
-    Papa.parse<Record<string, string>>(csvData, {
-      header: true,
-      skipEmptyLines: true,
-      complete: (results) => {
-        const parsed: VerbConjugationItem[] = results.data.map((row) => ({
-          english: this.getValue(row, 'English'),
-          dictionaryForm: this.getValue(row, 'DictionaryForm'),
-          negativeForm: this.getValue(row, 'NegativeForm'),
-          pastForm: this.getValue(row, 'PastForm'),
-          teForm: this.getValue(row, 'TeForm')
-        }));
-        this.verbConjugations.set(parsed);
-      }
-    });
+  async loadAdjectives(): Promise<void> {
+    const csvData = await firstValueFrom(this.http.get('adjectives.csv', { responseType: 'text' }));
+    this.adjectives.set(this.parseConjugationCsv(csvData));
   }
 
   getVocab() {
@@ -109,5 +118,9 @@ export class VocabService {
 
   getVerbConjugations() {
     return this.verbConjugations;
+  }
+
+  getAdjectives() {
+    return this.adjectives;
   }
 }

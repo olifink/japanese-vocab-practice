@@ -34,6 +34,7 @@ export class App {
 
   vocab = this.vocabService.getVocab();
   verbConjugations = this.vocabService.getVerbConjugations();
+  adjectives = this.vocabService.getAdjectives();
 
   currentVerbIndex = signal<number>(0);
   isRevealed = signal<boolean>(false);
@@ -65,10 +66,24 @@ export class App {
     return list[this.currentVerbIndex() % list.length];
   });
 
+  currentAdjective = computed(() => {
+    const list = this.adjectives();
+    if (list.length === 0) return null;
+    return list[this.currentVerbIndex() % list.length];
+  });
+
+  isShadowMode = computed(() =>
+    this.settings.mode() === 'CONJUGATION-SHADOW' || this.settings.mode() === 'ADJECTIVE-SHADOW');
+
+  currentShadowItem = computed(() => {
+    if (this.settings.mode() === 'ADJECTIVE-SHADOW') return this.currentAdjective();
+    if (this.settings.mode() === 'CONJUGATION-SHADOW') return this.currentConjugation();
+    return null;
+  });
+
   activeItemCount = computed(() => {
-    if (this.settings.mode() === 'CONJUGATION-SHADOW') {
-      return this.verbConjugations().length;
-    }
+    if (this.settings.mode() === 'CONJUGATION-SHADOW') return this.verbConjugations().length;
+    if (this.settings.mode() === 'ADJECTIVE-SHADOW') return this.adjectives().length;
     return this.filteredVocab().length;
   });
 
@@ -79,6 +94,7 @@ export class App {
   constructor() {
     this.vocabService.loadVocab();
     this.vocabService.loadVerbConjugations();
+    this.vocabService.loadAdjectives();
 
     // Reset index when filter changes
     effect(() => {
@@ -86,16 +102,15 @@ export class App {
       this.settings.selectedLesson();
       this.settings.lessonRangeMode();
       this.currentVerbIndex.set(0);
-      this.isRevealed.set(this.settings.mode() !== 'CONJUGATION-SHADOW' && this.settings.isCramMode());
+      this.isRevealed.set(!this.isShadowMode() && this.settings.isCramMode());
     });
 
     // In cram mode, always show the answer and auto-play Japanese audio for the current card.
     effect(() => {
-      const mode = this.settings.mode();
       const isCramMode = this.settings.isCramMode();
       const word = this.currentWord();
 
-      if (mode === 'CONJUGATION-SHADOW' || !isCramMode || !word) {
+      if (this.isShadowMode() || !isCramMode || !word) {
         return;
       }
 
@@ -127,8 +142,8 @@ export class App {
     });
   }
 
-  async speakConjugationForms(): Promise<void> {
-    const item = this.currentConjugation();
+  async speakActiveForms(): Promise<void> {
+    const item = this.currentShadowItem();
     if (!item || !('speechSynthesis' in window)) return;
 
     this.shadowPlaybackRequestId += 1;
@@ -170,9 +185,12 @@ export class App {
       speechSynthesis.cancel();
     }
 
-    const list = this.settings.mode() === 'CONJUGATION-SHADOW'
+    const mode = this.settings.mode();
+    const list = mode === 'CONJUGATION-SHADOW'
       ? this.verbConjugations()
-      : this.filteredVocab();
+      : mode === 'ADJECTIVE-SHADOW'
+        ? this.adjectives()
+        : this.filteredVocab();
     if (list.length === 0) return;
 
     if (this.settings.isRandomMode() && list.length > 1) {
@@ -185,7 +203,7 @@ export class App {
       this.currentVerbIndex.update(i => (i + 1) % list.length);
     }
 
-    this.isRevealed.set(this.settings.mode() !== 'CONJUGATION-SHADOW' && this.settings.isCramMode());
+    this.isRevealed.set(!this.isShadowMode() && this.settings.isCramMode());
 
     // Focus the next button (or the reveal button will be focused by default if it's the only one)
     setTimeout(() => {

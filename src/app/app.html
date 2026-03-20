@@ -5,7 +5,7 @@
     class="toolbar-toggle">
     Random
   </mat-slide-toggle>
-  @if (settings.mode() !== 'CONJUGATION-SHADOW') {
+  @if (!isShadowMode()) {
   <mat-slide-toggle [checked]="settings.isCramMode()" (change)="settings.isCramMode.set($event.checked)"
     class="toolbar-toggle">
     Cram
@@ -17,16 +17,16 @@
 </mat-toolbar>
 
 <div class="container">
-  @if (settings.mode() === 'CONJUGATION-SHADOW' ? currentConjugation() : currentWord()) {
+  @if (isShadowMode() ? currentShadowItem() : currentWord()) {
   <div class="practice-area">
     <mat-card class="verb-card">
-      @if (settings.mode() === 'CONJUGATION-SHADOW') {
+      @if (isShadowMode()) {
       <mat-card-header>
         <mat-card-subtitle>
-          Verb Conjugation Shadowing
+          {{ settings.mode() === 'ADJECTIVE-SHADOW' ? 'Adjective Shadowing' : 'Verb Conjugation Shadowing' }}
         </mat-card-subtitle>
         <mat-card-title>
-          <h1>{{ currentConjugation()?.english }}</h1>
+          <h1>{{ currentShadowItem()?.english }}</h1>
         </mat-card-title>
       </mat-card-header>
 
@@ -35,8 +35,8 @@
           <div class="conjugation-item">
             <p class="form-label">Dictionary Form</p>
             <div class="japanese-display-row">
-              <p class="form-value">{{ currentConjugation()?.dictionaryForm }}</p>
-              <button mat-icon-button (click)="speak(currentConjugation()?.dictionaryForm)"
+              <p class="form-value">{{ currentShadowItem()?.dictionaryForm }}</p>
+              <button mat-icon-button (click)="speak(currentShadowItem()?.dictionaryForm)"
                 aria-label="Speak dictionary form">
                 <mat-icon>volume_up</mat-icon>
               </button>
@@ -46,8 +46,8 @@
           <div class="conjugation-item">
             <p class="form-label">Negative Form</p>
             <div class="japanese-display-row">
-              <p class="form-value">{{ currentConjugation()?.negativeForm }}</p>
-              <button mat-icon-button (click)="speak(currentConjugation()?.negativeForm)"
+              <p class="form-value">{{ currentShadowItem()?.negativeForm }}</p>
+              <button mat-icon-button (click)="speak(currentShadowItem()?.negativeForm)"
                 aria-label="Speak negative form">
                 <mat-icon>volume_up</mat-icon>
               </button>
@@ -57,8 +57,8 @@
           <div class="conjugation-item">
             <p class="form-label">Past Form</p>
             <div class="japanese-display-row">
-              <p class="form-value">{{ currentConjugation()?.pastForm }}</p>
-              <button mat-icon-button (click)="speak(currentConjugation()?.pastForm)" aria-label="Speak past form">
+              <p class="form-value">{{ currentShadowItem()?.pastForm }}</p>
+              <button mat-icon-button (click)="speak(currentShadowItem()?.pastForm)" aria-label="Speak past form">
                 <mat-icon>volume_up</mat-icon>
               </button>
             </div>
@@ -67,8 +67,8 @@
           <div class="conjugation-item">
             <p class="form-label">Te Form</p>
             <div class="japanese-display-row">
-              <p class="form-value">{{ currentConjugation()?.teForm }}</p>
-              <button mat-icon-button (click)="speak(currentConjugation()?.teForm)" aria-label="Speak te form">
+              <p class="form-value">{{ currentShadowItem()?.teForm }}</p>
+              <button mat-icon-button (click)="speak(currentShadowItem()?.teForm)" aria-label="Speak te form">
                 <mat-icon>volume_up</mat-icon>
               </button>
             </div>
@@ -77,7 +77,7 @@
       </mat-card-content>
 
       <mat-card-actions class="card-actions">
-        <button mat-stroked-button color="primary" (click)="speakConjugationForms()">SPEAK ALL FORMS</button>
+        <button mat-stroked-button color="primary" (click)="speakActiveForms()">SPEAK ALL FORMS</button>
         <span class="spacer"></span>
         <button mat-flat-button #nextButton color="primary" (click)="nextWord()">NEXT</button>
       </mat-card-actions>
@@ -141,14 +141,15 @@
     </mat-card>
     <div class="stats">
       Word {{ (currentVerbIndex() % activeItemCount()) + 1 }} of {{ activeItemCount() }}
-      @if (settings.mode() !== 'CONJUGATION-SHADOW' && isNumericLesson(currentWord()?.lesson)) {
+      @if (!isShadowMode() && isNumericLesson(currentWord()?.lesson)) {
       (Lesson {{ currentWord()?.lesson }})
       }
     </div>
   </div>
   } @else {
   <div class="loading">
-    @if (settings.mode() === 'CONJUGATION-SHADOW' ? verbConjugations().length === 0 : vocab().length === 0) {
+    @if (isShadowMode() ? (settings.mode() === 'CONJUGATION-SHADOW' ? verbConjugations().length === 0 :
+    adjectives().length === 0) : vocab().length === 0) {
     <p>Loading vocabulary...</p>
     } @else {
     <p>No vocabulary found for this lesson.</p>
