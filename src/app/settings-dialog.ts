@@ -70,16 +70,29 @@ import { computed } from '@angular/core';
       @if (settings.mode() !== 'CONJUGATION-SHADOW') {
       <div class="control-row lesson-row">
         <mat-form-field appearance="outline" class="lesson-select">
-          <mat-label>Lesson</mat-label>
+          <mat-label>Lesson or Set</mat-label>
           <mat-select [value]="settings.selectedLesson()" (selectionChange)="settings.selectedLesson.set($event.value)">
             <mat-option value="all">All Lessons</mat-option>
-            @for (lesson of lessons(); track lesson) {
-            <mat-option [value]="lesson">Lesson {{ lesson }}</mat-option>
+
+            @if (numericLessons().length > 0) {
+            <mat-optgroup label="Numeric Lessons">
+              @for (lesson of numericLessons(); track lesson) {
+              <mat-option [value]="lesson">Lesson {{ lesson }}</mat-option>
+              }
+            </mat-optgroup>
+            }
+
+            @if (textLessons().length > 0) {
+            <mat-optgroup label="Other Sets">
+              @for (lesson of textLessons(); track lesson) {
+              <mat-option [value]="lesson">{{ lesson }}</mat-option>
+              }
+            </mat-optgroup>
             }
           </mat-select>
         </mat-form-field>
 
-        @if (settings.selectedLesson() !== 'all') {
+        @if (isNumericLesson(settings.selectedLesson())) {
         <mat-button-toggle-group [value]="settings.lessonRangeMode()" (change)="settings.lessonRangeMode.set($event.value)"
           aria-label="Lesson Range">
           <mat-button-toggle value="exact">Only</mat-button-toggle>
@@ -131,9 +144,23 @@ export class SettingsDialog {
   private vocabService = inject(VocabService);
   vocab = this.vocabService.getVocab();
 
-  lessons = computed(() => {
+  numericLessons = computed(() => {
     const allVocab = this.vocab();
-    const uniqueLessons = [...new Set(allVocab.map(v => v.lesson))].sort((a, b) => a - b);
-    return uniqueLessons;
+    const uniqueLessons = [...new Set(allVocab.map(v => v.lesson))];
+    return uniqueLessons
+      .filter((lesson): lesson is number => this.isNumericLesson(lesson))
+      .sort((a, b) => a - b);
   });
+
+  textLessons = computed(() => {
+    const allVocab = this.vocab();
+    const uniqueLessons = [...new Set(allVocab.map(v => v.lesson))];
+    return uniqueLessons
+      .filter((lesson): lesson is string => typeof lesson === 'string')
+      .sort((a, b) => a.localeCompare(b));
+  });
+
+  isNumericLesson(value: unknown): value is number {
+    return typeof value === 'number' && !Number.isNaN(value);
+  }
 }

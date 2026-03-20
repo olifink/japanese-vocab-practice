@@ -135,7 +135,7 @@
     </mat-card>
     <div class="stats">
       Word {{ (currentVerbIndex() % activeItemCount()) + 1 }} of {{ activeItemCount() }}
-      @if (settings.mode() !== 'CONJUGATION-SHADOW') {
+      @if (settings.mode() !== 'CONJUGATION-SHADOW' && isNumericLesson(currentWord()?.lesson)) {
       (Lesson {{ currentWord()?.lesson }})
       }
     </div>

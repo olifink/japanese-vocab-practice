@@ -3,6 +3,8 @@ import { HttpClient } from '@angular/common/http';
 import * as Papa from 'papaparse';
 import { firstValueFrom } from 'rxjs';
 
+export type LessonValue = number | string;
+
 export interface VocabItem {
   group: string;
   japaneseForm: string;
@@ -11,7 +13,7 @@ export interface VocabItem {
   naiForm: string;
   taForm: string;
   meaning: string;
-  lesson: number;
+  lesson: LessonValue;
 }
 
 export interface VerbConjugationItem {
@@ -34,6 +36,14 @@ export class VocabService {
     return row[key]?.trim() ?? '';
   }
 
+  private parseLessonValue(rawLesson: string): LessonValue {
+    const numericLesson = Number(rawLesson);
+    if (!Number.isNaN(numericLesson) && rawLesson !== '') {
+      return numericLesson;
+    }
+    return rawLesson;
+  }
+
   async loadVocab(): Promise<void> {
     const csvData = await firstValueFrom(this.http.get('lessons.csv', { responseType: 'text' }));
 
@@ -49,7 +59,7 @@ export class VocabService {
           naiForm: this.getValue(row, 'ない-form'),
           taForm: this.getValue(row, 'た-form'),
           meaning: this.getValue(row, 'meaning'),
-          lesson: parseInt(this.getValue(row, 'lesson'), 10)
+          lesson: this.parseLessonValue(this.getValue(row, 'lesson'))
         }));
         this.vocab.set(parsed);
       }

@@ -46,9 +46,10 @@ export class App {
 
     if (lesson === 'all') return allVocab;
 
-    if (rangeMode === 'up-to') {
-      return allVocab.filter(v => v.lesson <= (lesson as number));
+    if (rangeMode === 'up-to' && this.isNumericLesson(lesson)) {
+      return allVocab.filter(v => this.isNumericLesson(v.lesson) && v.lesson <= lesson);
     }
+
     return allVocab.filter(v => v.lesson === lesson);
   });
 
@@ -70,6 +71,10 @@ export class App {
     }
     return this.filteredVocab().length;
   });
+
+  isNumericLesson(value: unknown): value is number {
+    return typeof value === 'number' && !Number.isNaN(value);
+  }
 
   constructor() {
     this.vocabService.loadVocab();
