@@ -33,6 +33,7 @@ export class App {
   settings = inject(SettingsService);
 
   vocab = this.vocabService.getVocab();
+  verbConjugations = this.vocabService.getVerbConjugations();
 
   currentVerbIndex = signal<number>(0);
   isRevealed = signal<boolean>(false);
@@ -56,11 +57,26 @@ export class App {
     return list[this.currentVerbIndex() % list.length];
   });
 
+  currentConjugation = computed(() => {
+    const list = this.verbConjugations();
+    if (list.length === 0) return null;
+    return list[this.currentVerbIndex() % list.length];
+  });
+
+  activeItemCount = computed(() => {
+    if (this.settings.mode() === 'CONJUGATION-SHADOW') {
+      return this.verbConjugations().length;
+    }
+    return this.filteredVocab().length;
+  });
+
   constructor() {
     this.vocabService.loadVocab();
+    this.vocabService.loadVerbConjugations();
 
     // Reset index when filter changes
     effect(() => {
+      this.settings.mode();
       this.settings.selectedLesson();
       this.settings.lessonRangeMode();
       this.currentVerbIndex.set(0);
@@ -76,6 +92,13 @@ export class App {
     speechSynthesis.speak(utterance);
   }
 
+  speakConjugationForms(): void {
+    const item = this.currentConjugation();
+    if (!item) return;
+    const phrase = `${item.dictionaryForm}。${item.negativeForm}。${item.pastForm}。${item.teForm}`;
+    this.speak(phrase);
+  }
+
   openSettings() {
     this.dialog.open(SettingsDialog, {
       width: '400px'
@@ -83,7 +106,11 @@ export class App {
   }
 
   nextWord() {
-    const list = this.filteredVocab();
+    const list = this.settings.mode() === 'CONJUGATION-SHADOW'
+      ? this.verbConjugations()
+      : this.filteredVocab();
+    if (list.length === 0) return;
+
     if (this.settings.isRandomMode() && list.length > 1) {
       let newIndex;
       do {

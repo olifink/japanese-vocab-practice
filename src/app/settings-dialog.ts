@@ -34,10 +34,12 @@ import { computed } from '@angular/core';
           <mat-select [value]="settings.mode()" (selectionChange)="settings.mode.set($event.value)">
             <mat-option value="JP-EN">Japanese to English</mat-option>
             <mat-option value="EN-JP">English to Japanese</mat-option>
+            <mat-option value="CONJUGATION-SHADOW">Verb Conjugation Shadowing</mat-option>
           </mat-select>
         </mat-form-field>
       </div>
 
+      @if (settings.mode() !== 'CONJUGATION-SHADOW') {
       <div class="control-row lesson-row">
         <mat-form-field appearance="outline" class="lesson-select">
           <mat-label>Lesson</mat-label>
@@ -57,6 +59,7 @@ import { computed } from '@angular/core';
         </mat-button-toggle-group>
         }
       </div>
+      }
     </mat-dialog-content>
     <mat-dialog-actions align="end">
       <button mat-button mat-dialog-close>CLOSE</button>

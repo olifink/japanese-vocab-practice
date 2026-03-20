@@ -1,6 +1,6 @@
 import { Injectable, signal, effect } from '@angular/core';
 
-export type PracticeMode = 'JP-EN' | 'EN-JP';
+export type PracticeMode = 'JP-EN' | 'EN-JP' | 'CONJUGATION-SHADOW';
 export type LessonRangeMode = 'exact' | 'up-to';
 
 @Injectable({
