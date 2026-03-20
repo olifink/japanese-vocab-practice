@@ -146,6 +146,10 @@ export class App {
     });
   }
 
+  revealAnswer() {
+    this.isRevealed.set(true);
+  }
+
   nextWord() {
     this.shadowPlaybackRequestId += 1;
     if ('speechSynthesis' in window) {

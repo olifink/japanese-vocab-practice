@@ -116,9 +116,9 @@
             }
           </div>
           } @else {
-          <div class="placeholder-answer">
-            <p>?</p>
-          </div>
+          <button class="placeholder-answer" type="button" (click)="revealAnswer()" aria-label="Reveal answer">
+            <span>?</span>
+          </button>
           }
         </div>
       </mat-card-content>

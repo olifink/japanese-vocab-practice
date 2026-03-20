@@ -166,6 +166,7 @@ h1 {
 }
 
 .placeholder-answer {
+  width: 100%;
   text-align: center;
   padding: 1.5rem;
   background-color: var(--surface-container-low);
@@ -176,8 +177,14 @@ h1 {
   display: flex;
   flex-direction: column;
   justify-content: center;
+  cursor: pointer;
 
-  p {
+  &:focus-visible {
+    outline: 3px solid var(--primary);
+    outline-offset: 2px;
+  }
+
+  span {
     font-size: 2.5rem;
     font-weight: 700;
     color: var(--outline-variant);
