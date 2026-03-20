@@ -10,6 +10,7 @@ export type LessonRangeMode = 'exact' | 'up-to';
 export class SettingsService {
   mode = signal<PracticeMode>((localStorage.getItem('mode') as PracticeMode) || 'JP-EN');
   isRandomMode = signal<boolean>(localStorage.getItem('isRandomMode') === 'true');
+  isCramMode = signal<boolean>(localStorage.getItem('isCramMode') === 'true');
   selectedLesson = signal<LessonValue | 'all'>(this.getInitialLesson());
   lessonRangeMode = signal<LessonRangeMode>((localStorage.getItem('lessonRangeMode') as LessonRangeMode) || 'exact');
   shadowPauseMs = signal<number>(this.getInitialNumber('shadowPauseMs', 700));
@@ -20,6 +21,7 @@ export class SettingsService {
     effect(() => {
       localStorage.setItem('mode', this.mode());
       localStorage.setItem('isRandomMode', this.isRandomMode().toString());
+      localStorage.setItem('isCramMode', this.isCramMode().toString());
       localStorage.setItem('selectedLesson', this.selectedLesson().toString());
       localStorage.setItem('lessonRangeMode', this.lessonRangeMode());
       localStorage.setItem('shadowPauseMs', this.shadowPauseMs().toString());

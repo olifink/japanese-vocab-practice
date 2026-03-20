@@ -5,6 +5,12 @@
     class="toolbar-toggle">
     Random
   </mat-slide-toggle>
+  @if (settings.mode() !== 'CONJUGATION-SHADOW') {
+  <mat-slide-toggle [checked]="settings.isCramMode()" (change)="settings.isCramMode.set($event.checked)"
+    class="toolbar-toggle">
+    Cram
+  </mat-slide-toggle>
+  }
   <button mat-icon-button (click)="openSettings()" aria-label="Settings">
     <mat-icon>settings</mat-icon>
   </button>
@@ -100,7 +106,7 @@
 
       <mat-card-content>
         <div class="answer-section">
-          @if (isRevealed()) {
+          @if (isRevealed() || settings.isCramMode()) {
           <div class="review-answer">
             <p class="answer-label">Answer:</p>
             @if (settings.mode() === 'JP-EN') {
@@ -125,8 +131,8 @@
 
       <mat-card-actions class="card-actions">
         <span class="spacer"></span>
-        @if (!isRevealed()) {
-        <button mat-flat-button color="primary" (click)="isRevealed.set(true)">REVEAL</button>
+        @if (!isRevealed() && !settings.isCramMode()) {
+        <button mat-flat-button color="primary" (click)="revealAnswer()">REVEAL</button>
         } @else {
         <button mat-flat-button #nextButton color="primary" (click)="nextWord()">NEXT</button>
         }

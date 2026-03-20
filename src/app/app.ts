@@ -86,7 +86,21 @@ export class App {
       this.settings.selectedLesson();
       this.settings.lessonRangeMode();
       this.currentVerbIndex.set(0);
-      this.isRevealed.set(false);
+      this.isRevealed.set(this.settings.mode() !== 'CONJUGATION-SHADOW' && this.settings.isCramMode());
+    });
+
+    // In cram mode, always show the answer and auto-play Japanese audio for the current card.
+    effect(() => {
+      const mode = this.settings.mode();
+      const isCramMode = this.settings.isCramMode();
+      const word = this.currentWord();
+
+      if (mode === 'CONJUGATION-SHADOW' || !isCramMode || !word) {
+        return;
+      }
+
+      this.isRevealed.set(true);
+      this.speak(word.japaneseForm);
     });
   }
 
@@ -171,7 +185,7 @@ export class App {
       this.currentVerbIndex.update(i => (i + 1) % list.length);
     }
 
-    this.isRevealed.set(false);
+    this.isRevealed.set(this.settings.mode() !== 'CONJUGATION-SHADOW' && this.settings.isCramMode());
 
     // Focus the next button (or the reveal button will be focused by default if it's the only one)
     setTimeout(() => {
