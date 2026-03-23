@@ -1,4 +1,6 @@
 English,DictionaryForm,NegativeForm,PastForm,TeForm
+to have (things),ある,ない,あった,あって
+to have (people/animals),いる,いない,いた,いて
 to do,する,しない,した,して
 to go,いく,いかない,いった,いって
 to come,くる,こない,きた,きて
@@ -64,3 +66,39 @@ to swim,およぐ,およがない,およいだ,およいで
 to sing,うたう,うたわない,うたった,うたって
 to draw,かく,かかない,かいた,かいて
 to practice,れんしゅうする,れんしゅうしない,れんしゅうした,れんしゅうして
+to bring (something),もってくる,もってこない,もってきた,もってきて
+to take (something),もっていく,もっていかない,もっていった,もっていって
+to bring (someone),つれてくる,つれてこない,つれてきた,つれてきて
+to take (someone),つれていく,つれていかない,つれていった,つれていって
+to lose (an item),なくす,なくさない,なくした,なくして
+to find,みつける,みつけない,みつけた,みつけて
+to begin (intransitive),はじまる,はじまらない,はじまった,はじまって
+to end (intransitive),おわる,おわらない,おわった,おわって
+to open (intransitive),あく,あかない,あいた,あいて
+to close (intransitive),しまる,しまらない,しまった,しまって
+to turn on,つける,つけない,つけた,つけて
+to turn off,けす,けさない,けした,けして
+to learn,ならう,ならわない,ならった,ならって
+to teach,おしえる,おしえない,おしえた,おしえて
+to think/consider,かんがえる,かんがえない,かんがえた,かんがえて
+to decide (intransitive),きまる,きまらない,きまった,きまって
+to rest,やすむ,やすまない,やすんだ,やすんで
+to get tired,つかれる,つかれない,つかれた,つかれて
+to work,はたらく,はたらかない,はたらいた,はたらいて
+to live/reside,すむ,すまない,すんだ,すんで
+to open (book/eyes),ひらく,ひらかない,ひらいた,ひらいて
+to close (book/eyes),とじる,とじない,とじた,とじて
+to push,おす,おさない,おした,おして
+to pull,ひく,ひかない,ひいた,ひいて
+to send,おくる,おくらない,おくった,おくって
+to receive (formal),うけとる,うけとらない,うけとった,うけとって
+to choose/select,えらぶ,えらばない,えらんだ,えらんで
+to change,かえる,かえない,かえた,かえて
+to need (items),いる,いらない,いった,いって
+to borrow temporarily (money),かりる,かりない,かりた,かりて
+to return (something),かえす,かえさない,かえした,かえして
+to fix/repair,なおす,なおさない,なおした,なおして
+to stop,とまる,とまらない,とまった,とまって
+to move (intransitive),うごく,うごかない,うごいた,うごいて
+to choose,えらぶ,えらばない,えらんだ,えらんで
+to decide (transitive),きめる,きめない,きめた,きめて
