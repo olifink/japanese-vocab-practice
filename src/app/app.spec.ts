@@ -79,6 +79,77 @@ describe('App', () => {
     expect(compiled.querySelector('mat-toolbar span')?.textContent).toContain('JP Practice');
   });
 
+  it('shows the previous button only when random mode is off', () => {
+    const fixture = TestBed.createComponent(App);
+    const app = fixture.componentInstance;
+
+    app.vocab.set([
+      {
+        group: 'V',
+        japaneseForm: 'いく',
+        dictionaryForm: 'いく',
+        teForm: 'いって',
+        naiForm: 'いかない',
+        taForm: 'いった',
+        meaning: 'go',
+        lesson: 1
+      },
+      {
+        group: 'V',
+        japaneseForm: 'くる',
+        dictionaryForm: 'くる',
+        teForm: 'きて',
+        naiForm: 'こない',
+        taForm: 'きた',
+        meaning: 'come',
+        lesson: 1
+      }
+    ]);
+
+    fixture.detectChanges();
+    expect(fixture.nativeElement.textContent).toContain('PREVIOUS');
+
+    app.settings.isRandomMode.set(true);
+    fixture.detectChanges();
+    expect(fixture.nativeElement.textContent).not.toContain('PREVIOUS');
+  });
+
+  it('moves backward through items in non-random mode', () => {
+    const fixture = TestBed.createComponent(App);
+    const app = fixture.componentInstance;
+
+    app.vocab.set([
+      {
+        group: 'V',
+        japaneseForm: 'いく',
+        dictionaryForm: 'いく',
+        teForm: 'いって',
+        naiForm: 'いかない',
+        taForm: 'いった',
+        meaning: 'go',
+        lesson: 1
+      },
+      {
+        group: 'V',
+        japaneseForm: 'くる',
+        dictionaryForm: 'くる',
+        teForm: 'きて',
+        naiForm: 'こない',
+        taForm: 'きた',
+        meaning: 'come',
+        lesson: 1
+      }
+    ]);
+    app.settings.isRandomMode.set(false);
+    app.currentVerbIndex.set(1);
+
+    app.previousWord();
+    expect(app.currentWord()?.meaning).toBe('go');
+
+    app.previousWord();
+    expect(app.currentWord()?.meaning).toBe('come');
+  });
+
   it.each(['CONJUGATION-SHADOW', 'ADJECTIVE-SHADOW'] as const)(
     'shows the cram toggle in %s mode',
     (mode) => {

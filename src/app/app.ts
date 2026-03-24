@@ -87,6 +87,8 @@ export class App {
     return this.filteredVocab().length;
   });
 
+  canGoPrevious = computed(() => !this.settings.isRandomMode() && this.activeItemCount() > 1);
+
   isNumericLesson(value: unknown): value is number {
     return typeof value === 'number' && !Number.isNaN(value);
   }
@@ -201,35 +203,51 @@ export class App {
     this.isRevealed.set(true);
   }
 
-  nextWord() {
-    this.shadowPlaybackRequestId += 1;
-    if ('speechSynthesis' in window) {
-      speechSynthesis.cancel();
-    }
-
+  private getActiveItems() {
     const mode = this.settings.mode();
-    const list = mode === 'CONJUGATION-SHADOW'
+    return mode === 'CONJUGATION-SHADOW'
       ? this.verbConjugations()
       : mode === 'ADJECTIVE-SHADOW'
         ? this.adjectives()
         : this.filteredVocab();
+  }
+
+  private stopPlayback(): void {
+    this.shadowPlaybackRequestId += 1;
+    if ('speechSynthesis' in window) {
+      speechSynthesis.cancel();
+    }
+  }
+
+  private updateCurrentIndex(step: 1 | -1): void {
+    const list = this.getActiveItems();
     if (list.length === 0) return;
 
-    if (this.settings.isRandomMode() && list.length > 1) {
+    if (step === 1 && this.settings.isRandomMode() && list.length > 1) {
       let newIndex;
       do {
         newIndex = Math.floor(Math.random() * list.length);
       } while (newIndex === this.currentVerbIndex() % list.length);
       this.currentVerbIndex.set(newIndex);
     } else {
-      this.currentVerbIndex.update(i => (i + 1) % list.length);
+      this.currentVerbIndex.update(i => (i + step + list.length) % list.length);
     }
 
     this.isRevealed.set(!this.isShadowMode() && this.settings.isCramMode());
+  }
+
+  nextWord() {
+    this.stopPlayback();
+    this.updateCurrentIndex(1);
 
     // Focus the next button (or the reveal button will be focused by default if it's the only one)
     setTimeout(() => {
       this.nextButton?.nativeElement?.focus();
     });
+  }
+
+  previousWord() {
+    this.stopPlayback();
+    this.updateCurrentIndex(-1);
   }
 }

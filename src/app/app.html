@@ -75,6 +75,9 @@
       </mat-card-content>
 
       <mat-card-actions class="card-actions">
+        @if (canGoPrevious()) {
+        <button mat-stroked-button (click)="previousWord()">PREVIOUS</button>
+        }
         <button mat-stroked-button color="primary" (click)="speakActiveForms()">SPEAK ALL FORMS</button>
         <span class="spacer"></span>
         <button mat-flat-button #nextButton color="primary" (click)="nextWord()">NEXT</button>
@@ -128,6 +131,9 @@
       </mat-card-content>
 
       <mat-card-actions class="card-actions">
+        @if (canGoPrevious()) {
+        <button mat-stroked-button (click)="previousWord()">PREVIOUS</button>
+        }
         <span class="spacer"></span>
         @if (!isRevealed() && !settings.isCramMode()) {
         <button mat-flat-button color="primary" (click)="revealAnswer()">REVEAL</button>
