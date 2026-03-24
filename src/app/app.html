@@ -5,12 +5,10 @@
     class="toolbar-toggle">
     Random
   </mat-slide-toggle>
-  @if (!isShadowMode()) {
   <mat-slide-toggle [checked]="settings.isCramMode()" (change)="settings.isCramMode.set($event.checked)"
     class="toolbar-toggle">
     Cram
   </mat-slide-toggle>
-  }
   <button mat-icon-button (click)="openSettings()" aria-label="Settings">
     <mat-icon>settings</mat-icon>
   </button>

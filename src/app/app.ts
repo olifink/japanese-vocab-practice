@@ -1,4 +1,4 @@
-import { Component, signal, computed, effect, inject, ViewChild, ElementRef } from '@angular/core';
+import { Component, signal, computed, effect, inject, ViewChild, ElementRef, untracked } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
@@ -6,7 +6,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
-import { VocabService } from './services/vocab';
+import { VocabService, type AdjectiveItem, type VerbConjugationItem } from './services/vocab';
 import { SettingsService } from './services/settings';
 import { SettingsDialog } from './settings-dialog';
 
@@ -117,6 +117,19 @@ export class App {
       this.isRevealed.set(true);
       this.speak(word.japaneseForm);
     });
+
+    effect(() => {
+      const isCramMode = this.settings.isCramMode();
+      const shadowItem = this.currentShadowItem();
+
+      if (!isCramMode || !shadowItem) {
+        return;
+      }
+
+      untracked(() => {
+        void this.playShadowForms(shadowItem, 1);
+      });
+    });
   }
 
   speak(text: string | undefined): void {
@@ -142,17 +155,19 @@ export class App {
     });
   }
 
-  async speakActiveForms(): Promise<void> {
-    const item = this.currentShadowItem();
+  private getShadowForms(item: VerbConjugationItem | AdjectiveItem): string[] {
+    return [item.dictionaryForm, item.negativeForm, item.pastForm, item.teForm].filter(Boolean);
+  }
+
+  private async playShadowForms(item: VerbConjugationItem | AdjectiveItem, repeatCount: number): Promise<void> {
     if (!item || !('speechSynthesis' in window)) return;
 
     this.shadowPlaybackRequestId += 1;
     const requestId = this.shadowPlaybackRequestId;
     speechSynthesis.cancel();
 
-    const forms = [item.dictionaryForm, item.negativeForm, item.pastForm, item.teForm].filter(Boolean);
+    const forms = this.getShadowForms(item);
     const pauseMs = this.settings.shadowPauseMs();
-    const repeatCount = this.settings.shadowRepeatLoop();
 
     for (let repeatIndex = 0; repeatIndex < repeatCount; repeatIndex += 1) {
       for (let formIndex = 0; formIndex < forms.length; formIndex += 1) {
@@ -167,6 +182,13 @@ export class App {
         }
       }
     }
+  }
+
+  async speakActiveForms(): Promise<void> {
+    const item = this.currentShadowItem();
+    if (!item) return;
+
+    await this.playShadowForms(item, this.settings.shadowRepeatLoop());
   }
 
   openSettings() {
