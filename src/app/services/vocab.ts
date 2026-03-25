@@ -18,6 +18,7 @@ export interface VocabItem {
 
 export interface VerbConjugationItem {
   english: string;
+  masuForm: string;
   dictionaryForm: string;
   negativeForm: string;
   pastForm: string;
@@ -95,6 +96,7 @@ export class VocabService {
     });
     return results.data.map((row) => ({
       english: this.getValue(row, 'English'),
+      masuForm: this.getValue(row, 'MasuForm'),
       dictionaryForm: this.getValue(row, 'DictionaryForm'),
       negativeForm: this.getValue(row, 'NegativeForm'),
       pastForm: this.getValue(row, 'PastForm'),

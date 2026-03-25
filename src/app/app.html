@@ -30,6 +30,18 @@
 
       <mat-card-content>
         <div class="conjugation-list" aria-live="polite">
+          @if (currentShadowItem()?.masuForm) {
+          <div class="conjugation-item">
+            <p class="form-label">Masu Form</p>
+            <div class="japanese-display-row">
+              <p class="form-value">{{ currentShadowItem()?.masuForm }}</p>
+              <button mat-icon-button (click)="speak(currentShadowItem()?.masuForm)" aria-label="Speak masu form">
+                <mat-icon>volume_up</mat-icon>
+              </button>
+            </div>
+          </div>
+          }
+
           <div class="conjugation-item">
             <p class="form-label">Dictionary Form</p>
             <div class="japanese-display-row">

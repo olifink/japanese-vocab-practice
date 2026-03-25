@@ -158,7 +158,7 @@ export class App {
   }
 
   private getShadowForms(item: VerbConjugationItem | AdjectiveItem): string[] {
-    return [item.dictionaryForm, item.negativeForm, item.pastForm, item.teForm].filter(Boolean);
+    return [item.masuForm, item.dictionaryForm, item.negativeForm, item.pastForm, item.teForm].filter(Boolean);
   }
 
   private async playShadowForms(item: VerbConjugationItem | AdjectiveItem, repeatCount: number): Promise<void> {
