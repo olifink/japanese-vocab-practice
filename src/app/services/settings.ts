@@ -1,7 +1,7 @@
 import { Injectable, signal, effect } from '@angular/core';
 import { LessonValue } from './vocab';
 
-export type PracticeMode = 'JP-EN' | 'EN-JP' | 'CONJUGATION-SHADOW' | 'ADJECTIVE-SHADOW';
+export type PracticeMode = 'JP-EN' | 'EN-JP' | 'CONJUGATION-SHADOW' | 'ADJECTIVE-SHADOW' | 'NUMBERS';
 export type LessonRangeMode = 'exact' | 'up-to';
 
 @Injectable({

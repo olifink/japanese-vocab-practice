@@ -15,7 +15,11 @@
 </mat-toolbar>
 
 <div class="container">
-  @if (isShadowMode() ? currentShadowItem() : currentWord()) {
+  @if (isNumbersMode()) {
+  <div class="practice-area">
+    <app-numbers-practice />
+  </div>
+  } @else if (isShadowMode() ? currentShadowItem() : currentWord()) {
   <div class="practice-area">
     <mat-card class="verb-card">
       @if (isShadowMode()) {

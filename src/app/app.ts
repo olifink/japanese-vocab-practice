@@ -9,6 +9,7 @@ import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { VocabService, type AdjectiveItem, type VerbConjugationItem } from './services/vocab';
 import { SettingsService } from './services/settings';
 import { SettingsDialog } from './settings-dialog';
+import { NumbersPracticeComponent } from './numbers-practice/numbers-practice';
 
 @Component({
   selector: 'app-root',
@@ -20,7 +21,8 @@ import { SettingsDialog } from './settings-dialog';
     MatToolbarModule,
     MatIconModule,
     MatSlideToggleModule,
-    MatDialogModule
+    MatDialogModule,
+    NumbersPracticeComponent
   ],
   templateUrl: './app.html',
   styleUrl: './app.scss'
@@ -75,6 +77,8 @@ export class App {
   isShadowMode = computed(() =>
     this.settings.mode() === 'CONJUGATION-SHADOW' || this.settings.mode() === 'ADJECTIVE-SHADOW');
 
+  isNumbersMode = computed(() => this.settings.mode() === 'NUMBERS');
+
   currentShadowItem = computed(() => {
     if (this.settings.mode() === 'ADJECTIVE-SHADOW') return this.currentAdjective();
     if (this.settings.mode() === 'CONJUGATION-SHADOW') return this.currentConjugation();
@@ -112,7 +116,7 @@ export class App {
       const isCramMode = this.settings.isCramMode();
       const word = this.currentWord();
 
-      if (this.isShadowMode() || !isCramMode || !word) {
+      if (this.isShadowMode() || this.isNumbersMode() || !isCramMode || !word) {
         return;
       }
 

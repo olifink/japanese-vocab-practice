@@ -1,0 +1,47 @@
+<mat-card class="numbers-card">
+  <mat-card-content>
+    <div class="number-display" aria-live="polite" aria-atomic="true" aria-label="Current number">
+      <div class="arabic-number">{{ numberStr() }}</div>
+      @if (japaneseReading()) {
+        <div class="japanese-reading" lang="ja">{{ japaneseReading() }}</div>
+      }
+    </div>
+
+    <div class="keypad" role="group" aria-label="Number keypad">
+      <div class="keypad-row">
+        <button mat-stroked-button class="keypad-btn" (click)="appendDigit('7')" aria-label="7">7</button>
+        <button mat-stroked-button class="keypad-btn" (click)="appendDigit('8')" aria-label="8">8</button>
+        <button mat-stroked-button class="keypad-btn" (click)="appendDigit('9')" aria-label="9">9</button>
+      </div>
+      <div class="keypad-row">
+        <button mat-stroked-button class="keypad-btn" (click)="appendDigit('4')" aria-label="4">4</button>
+        <button mat-stroked-button class="keypad-btn" (click)="appendDigit('5')" aria-label="5">5</button>
+        <button mat-stroked-button class="keypad-btn" (click)="appendDigit('6')" aria-label="6">6</button>
+      </div>
+      <div class="keypad-row">
+        <button mat-stroked-button class="keypad-btn" (click)="appendDigit('1')" aria-label="1">1</button>
+        <button mat-stroked-button class="keypad-btn" (click)="appendDigit('2')" aria-label="2">2</button>
+        <button mat-stroked-button class="keypad-btn" (click)="appendDigit('3')" aria-label="3">3</button>
+      </div>
+      <div class="keypad-row">
+        <button mat-stroked-button class="keypad-btn" (click)="appendDecimal()" aria-label="Decimal point">.</button>
+        <button mat-stroked-button class="keypad-btn" (click)="appendDigit('0')" aria-label="0">0</button>
+        <button mat-stroked-button class="keypad-btn" (click)="backspace()" aria-label="Backspace">
+          <mat-icon>backspace</mat-icon>
+        </button>
+      </div>
+    </div>
+  </mat-card-content>
+
+  <mat-card-actions class="card-actions">
+    <button mat-stroked-button (click)="clear()">CLEAR</button>
+    <span class="spacer"></span>
+    @if (showNext()) {
+      <button mat-stroked-button color="primary" #nextBtn (click)="nextNumber()">NEXT</button>
+    }
+    <button mat-flat-button color="primary" (click)="speakNumber()" aria-label="Speak number in Japanese">
+      <mat-icon>volume_up</mat-icon>
+      SPEAK
+    </button>
+  </mat-card-actions>
+</mat-card>
