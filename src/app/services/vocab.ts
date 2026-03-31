@@ -23,6 +23,7 @@ export interface VerbConjugationItem {
   negativeForm: string;
   pastForm: string;
   teForm: string;
+  pastNegativeForm: string;
 }
 
 // Adjectives share the same conjugation structure as verbs
@@ -100,7 +101,8 @@ export class VocabService {
       dictionaryForm: this.getValue(row, 'DictionaryForm'),
       negativeForm: this.getValue(row, 'NegativeForm'),
       pastForm: this.getValue(row, 'PastForm'),
-      teForm: this.getValue(row, 'TeForm')
+      teForm: this.getValue(row, 'TeForm'),
+      pastNegativeForm: this.getValue(row, 'PastNegativeForm')
     }));
   }
 

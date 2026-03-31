@@ -78,6 +78,19 @@
             </div>
           </div>
 
+          @if (currentShadowItem()?.pastNegativeForm) {
+          <div class="conjugation-item">
+            <p class="form-label">Past Negative Form</p>
+            <div class="japanese-display-row">
+              <p class="form-value">{{ currentShadowItem()?.pastNegativeForm }}</p>
+              <button mat-icon-button (click)="speak(currentShadowItem()?.pastNegativeForm)"
+                aria-label="Speak past negative form">
+                <mat-icon>volume_up</mat-icon>
+              </button>
+            </div>
+          </div>
+          }
+
           <div class="conjugation-item">
             <p class="form-label">Te Form</p>
             <div class="japanese-display-row">
