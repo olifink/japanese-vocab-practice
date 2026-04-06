@@ -104,10 +104,22 @@ export class DatePracticeComponent implements OnDestroy {
   speak(text: string | undefined): void {
     if (!text || !('speechSynthesis' in window)) return;
     this.cramPlaybackRequestId += 1;
+    const requestId = this.cramPlaybackRequestId;
     speechSynthesis.cancel();
+    this.currentCramItem.set(text);
     const utterance = new SpeechSynthesisUtterance(text);
     utterance.lang = 'ja-JP';
+    const clear = () => {
+      if (this.cramPlaybackRequestId === requestId) this.currentCramItem.set('');
+    };
+    utterance.onend = clear;
+    utterance.onerror = clear;
     speechSynthesis.speak(utterance);
+  }
+
+  stopSpeaking(): void {
+    this.stopPlayback();
+    this.currentCramItem.set('');
   }
 
   private stopPlayback(): void {

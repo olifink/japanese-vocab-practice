@@ -23,10 +23,13 @@
       </button>
     </div>
 
-    @if (settings.isCramMode() && currentCramItem()) {
+    @if (currentCramItem()) {
       <div class="cram-indicator" role="status" aria-live="polite">
         <mat-icon aria-hidden="true">record_voice_over</mat-icon>
         <span lang="ja">{{ currentCramItem() }}</span>
+        <button mat-icon-button (click)="stopSpeaking()" aria-label="Stop speaking" class="stop-btn">
+          <mat-icon>stop_circle</mat-icon>
+        </button>
       </div>
     }
 

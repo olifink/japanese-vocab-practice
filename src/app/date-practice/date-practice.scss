@@ -72,6 +72,12 @@
     font-size: clamp(1.4rem, 5vw, 2rem);
     font-weight: 500;
     color: var(--primary);
+    flex: 1;
+    text-align: center;
+  }
+
+  .stop-btn {
+    color: var(--error);
   }
 
   mat-icon {
