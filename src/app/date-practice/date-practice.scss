@@ -1,0 +1,153 @@
+:host {
+  display: block;
+  width: 100%;
+}
+
+.date-card {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  padding: 1rem;
+  border-radius: 28px;
+  box-sizing: border-box;
+
+  ::ng-deep .mat-mdc-card-header {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 0;
+
+    .mat-mdc-card-header-text {
+      margin: 0;
+      width: 100%;
+      text-align: center;
+    }
+  }
+
+  ::ng-deep .mat-mdc-card-content {
+    padding: 1rem 0;
+  }
+}
+
+.full-date-display {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  flex-wrap: wrap;
+
+  h1 {
+    font-size: clamp(1.4rem, 5vw, 2.2rem);
+    margin: 1rem 0 0.5rem;
+    line-height: 1.3;
+    word-break: break-word;
+  }
+}
+
+.date-picker-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 1rem;
+  flex-wrap: wrap;
+
+  .date-field {
+    flex: 1;
+    min-width: 160px;
+  }
+}
+
+.cram-indicator {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 12px 16px;
+  background-color: var(--surface-container-high);
+  border-radius: 12px;
+  margin-bottom: 1rem;
+
+  span {
+    font-size: clamp(1.4rem, 5vw, 2rem);
+    font-weight: 500;
+    color: var(--primary);
+  }
+
+  mat-icon {
+    color: var(--primary);
+  }
+}
+
+.parts-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+}
+
+.part-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 12px 8px;
+  background-color: var(--surface-container-high);
+  border-radius: 16px;
+  text-align: center;
+  min-height: 140px;
+}
+
+.part-label {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin: 0 0 2px;
+  color: var(--primary);
+  line-height: 1;
+}
+
+.part-sublabel {
+  font-size: 0.7rem;
+  color: var(--on-surface);
+  opacity: 0.6;
+  margin: 0 0 8px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.part-display {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+}
+
+.part-japanese {
+  font-size: clamp(1.1rem, 3.5vw, 1.5rem);
+  font-weight: 500;
+}
+
+.part-english {
+  font-size: 0.8rem;
+  opacity: 0.65;
+  margin: 2px 0 8px;
+}
+
+.speak-all-btn {
+  margin-top: auto;
+  font-size: 0.72rem;
+  height: 32px;
+  line-height: 32px;
+
+  ::ng-deep .mat-icon {
+    font-size: 16px;
+    width: 16px;
+    height: 16px;
+    margin-right: 4px;
+  }
+}
+
+.cram-config-hint {
+  margin: 0.25rem 1rem 0.5rem;
+  font-size: 0.85rem;
+  color: var(--on-surface);
+  opacity: 0.75;
+  text-align: right;
+}

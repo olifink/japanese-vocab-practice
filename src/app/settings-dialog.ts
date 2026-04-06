@@ -37,6 +37,7 @@ import { computed } from '@angular/core';
             <mat-option value="CONJUGATION-SHADOW">Verb Conjugation Shadowing</mat-option>
             <mat-option value="ADJECTIVE-SHADOW">Adjective Shadowing</mat-option>
             <mat-option value="NUMBERS">Japanese Numbers</mat-option>
+            <mat-option value="DATE">Japanese Dates</mat-option>
           </mat-select>
         </mat-form-field>
       </div>
@@ -69,7 +70,7 @@ import { computed } from '@angular/core';
       </div>
       }
 
-      @if (settings.mode() !== 'CONJUGATION-SHADOW' && settings.mode() !== 'ADJECTIVE-SHADOW' && settings.mode() !== 'NUMBERS') {
+      @if (settings.mode() !== 'CONJUGATION-SHADOW' && settings.mode() !== 'ADJECTIVE-SHADOW' && settings.mode() !== 'NUMBERS' && settings.mode() !== 'DATE') {
       <div class="control-row lesson-row">
         <mat-form-field appearance="outline" class="lesson-select">
           <mat-label>Lesson or Set</mat-label>

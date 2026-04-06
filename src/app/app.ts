@@ -10,6 +10,7 @@ import { VocabService, type AdjectiveItem, type VerbConjugationItem } from './se
 import { SettingsService } from './services/settings';
 import { SettingsDialog } from './settings-dialog';
 import { NumbersPracticeComponent } from './numbers-practice/numbers-practice';
+import { DatePracticeComponent } from './date-practice/date-practice';
 
 @Component({
   selector: 'app-root',
@@ -22,7 +23,8 @@ import { NumbersPracticeComponent } from './numbers-practice/numbers-practice';
     MatIconModule,
     MatSlideToggleModule,
     MatDialogModule,
-    NumbersPracticeComponent
+    NumbersPracticeComponent,
+    DatePracticeComponent
   ],
   templateUrl: './app.html',
   styleUrl: './app.scss'
@@ -78,6 +80,7 @@ export class App {
     this.settings.mode() === 'CONJUGATION-SHADOW' || this.settings.mode() === 'ADJECTIVE-SHADOW');
 
   isNumbersMode = computed(() => this.settings.mode() === 'NUMBERS');
+  isDateMode = computed(() => this.settings.mode() === 'DATE');
 
   currentShadowItem = computed(() => {
     if (this.settings.mode() === 'ADJECTIVE-SHADOW') return this.currentAdjective();
@@ -116,7 +119,7 @@ export class App {
       const isCramMode = this.settings.isCramMode();
       const word = this.currentWord();
 
-      if (this.isShadowMode() || this.isNumbersMode() || !isCramMode || !word) {
+      if (this.isShadowMode() || this.isNumbersMode() || this.isDateMode() || !isCramMode || !word) {
         return;
       }
 

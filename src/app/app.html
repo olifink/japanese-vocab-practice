@@ -19,6 +19,10 @@
   <div class="practice-area">
     <app-numbers-practice />
   </div>
+  } @else if (isDateMode()) {
+  <div class="practice-area">
+    <app-date-practice />
+  </div>
   } @else if (isShadowMode() ? currentShadowItem() : currentWord()) {
   <div class="practice-area">
     <mat-card class="verb-card">

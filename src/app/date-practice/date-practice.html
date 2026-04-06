@@ -1,0 +1,101 @@
+<mat-card class="date-card">
+  <mat-card-header>
+    <mat-card-subtitle>Date Practice</mat-card-subtitle>
+    <mat-card-title>
+      <div class="full-date-display">
+        <h1 lang="ja">{{ japaneseFullDate() }}</h1>
+        <button mat-icon-button (click)="speak(japaneseFullDate())" aria-label="Speak full date in Japanese">
+          <mat-icon>volume_up</mat-icon>
+        </button>
+      </div>
+    </mat-card-title>
+  </mat-card-header>
+
+  <mat-card-content>
+    <div class="date-picker-row">
+      <mat-form-field appearance="outline" class="date-field">
+        <mat-label>Select Date</mat-label>
+        <input matInput type="date" [value]="dateString()" (change)="onDateChange($event)" aria-label="Select date">
+      </mat-form-field>
+      <button mat-stroked-button (click)="setRandomDate()" aria-label="Pick a random date">
+        <mat-icon>shuffle</mat-icon>
+        Random
+      </button>
+    </div>
+
+    @if (settings.isCramMode() && currentCramItem()) {
+      <div class="cram-indicator" role="status" aria-live="polite">
+        <mat-icon aria-hidden="true">record_voice_over</mat-icon>
+        <span lang="ja">{{ currentCramItem() }}</span>
+      </div>
+    }
+
+    <div class="parts-grid" role="list" aria-label="Date components">
+      <div class="part-item" role="listitem">
+        <p class="part-label" lang="ja" aria-hidden="true">年</p>
+        <p class="part-sublabel">Year</p>
+        <div class="part-display">
+          <span class="part-japanese" lang="ja">{{ japaneseYear() }}</span>
+          <button mat-icon-button (click)="speak(japaneseYear())" [attr.aria-label]="'Speak year: ' + japaneseYear()">
+            <mat-icon>volume_up</mat-icon>
+          </button>
+        </div>
+        <p class="part-english">{{ selectedYear() }}</p>
+      </div>
+
+      <div class="part-item" role="listitem">
+        <p class="part-label" lang="ja" aria-hidden="true">月</p>
+        <p class="part-sublabel">Month</p>
+        <div class="part-display">
+          <span class="part-japanese" lang="ja">{{ japaneseMonth() }}</span>
+          <button mat-icon-button (click)="speak(japaneseMonth())" [attr.aria-label]="'Speak month: ' + japaneseMonth()">
+            <mat-icon>volume_up</mat-icon>
+          </button>
+        </div>
+        <p class="part-english">{{ monthEnglish() }}</p>
+        <button mat-stroked-button class="speak-all-btn" (click)="speakAllMonths()" aria-label="Speak all 12 months">
+          <mat-icon>playlist_play</mat-icon>
+          All Months
+        </button>
+      </div>
+
+      <div class="part-item" role="listitem">
+        <p class="part-label" lang="ja" aria-hidden="true">日</p>
+        <p class="part-sublabel">Day of Month</p>
+        <div class="part-display">
+          <span class="part-japanese" lang="ja">{{ japaneseDay() }}</span>
+          <button mat-icon-button (click)="speak(japaneseDay())" [attr.aria-label]="'Speak day: ' + japaneseDay()">
+            <mat-icon>volume_up</mat-icon>
+          </button>
+        </div>
+        <p class="part-english">Day {{ selectedDay() }}</p>
+        <button mat-stroked-button class="speak-all-btn" (click)="speakAllDays()" aria-label="Speak all 31 days of the month">
+          <mat-icon>playlist_play</mat-icon>
+          All Days
+        </button>
+      </div>
+
+      <div class="part-item" role="listitem">
+        <p class="part-label" lang="ja" aria-hidden="true">曜日</p>
+        <p class="part-sublabel">Weekday</p>
+        <div class="part-display">
+          <span class="part-japanese" lang="ja">{{ japaneseWeekday() }}</span>
+          <button mat-icon-button (click)="speak(japaneseWeekday())" [attr.aria-label]="'Speak weekday: ' + japaneseWeekday()">
+            <mat-icon>volume_up</mat-icon>
+          </button>
+        </div>
+        <p class="part-english">{{ weekdayEnglish() }}</p>
+        <button mat-stroked-button class="speak-all-btn" (click)="speakAllWeekdays()" aria-label="Speak all 7 weekdays">
+          <mat-icon>playlist_play</mat-icon>
+          All Weekdays
+        </button>
+      </div>
+    </div>
+  </mat-card-content>
+
+  @if (settings.isCramMode()) {
+    <p class="cram-config-hint" aria-live="polite">
+      Cycling: 曜日 → 月 → 日 • Pause {{ settings.shadowPauseMs() }}ms
+    </p>
+  }
+</mat-card>
