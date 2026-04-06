@@ -1,18 +1,18 @@
 lesson,group,word,meaning
-12,Adj (na),かんたん［な］,easy
-12,Adj (i),ちがい,near
-12,Adj (i),とおい,far
-12,Adj (i),はやい,"fast, early"
-12,Adj (i),おそい,"slow, late"
-12,Adj (i),おおい［ひとが～］,"many [people], much"
-12,Adj (i),すくない　［ひとが～］,"few [people], a little"
-12,Adj (i),あたたかい,warm
-12,Adj (i),すずしい,cool
-12,Adj (i),あまい,sweet
-12,Adj (i),からい,"hot (taste), spicy"
-12,Adj (i),おもい,heavy
-12,Adj (i),かるい,light
-12,Adj (i),いい［コーヒーが～］,prefer [coffee]
+12,naA,かんたん［な］,easy
+12,iA,ちがい,near
+12,iA,とおい,far
+12,iA,はやい,"fast, early"
+12,iA,おそい,"slow, late"
+12,iA,おおい［ひとが～］,"many [people], much"
+12,iA,すくない　［ひとが～］,"few [people], a little"
+12,iA,あたたかい,warm
+12,iA,すずしい,cool
+12,iA,あまい,sweet
+12,iA,からい,"hot (taste), spicy"
+12,iA,おもい,heavy
+12,iA,かるい,light
+12,iA,いい［コーヒーが～］,prefer [coffee]
 12,N,きせつ,season
 12,N,はる,spring
 12,N,なつ,summer
@@ -42,14 +42,14 @@ lesson,group,word,meaning
 12,N,いちばん,the most
 12,N,ずっと,by far
 12,N,はじめて,for the first time
-19,V (I),のぼります,"climb, go up"
-19,V (I),とまります［ホテルに～］,stay [at a hotel]
-19,V (III),そうじします,clean (a room)
-19,V (III),せんたくします,wash (clothes)
-19,V (I),なります,become
-19,Adj (i),ねむい,sleepy
-19,Adj (i),つよい,strong
-19,Adj (i),よわい,weak
+19,V1,のぼります,"climb, go up"
+19,V1,とまります［ホテルに～］,stay [at a hotel]
+19,V3,そうじします,clean (a room)
+19,V3,せんたくします,wash (clothes)
+19,V1,なります,become
+19,iA,ねむい,sleepy
+19,iA,つよい,strong
+19,iA,よわい,weak
 19,N,れんしゅう,practice
 19,N,ゴルフ,golf
 19,N,すもう,sumo wrestling
@@ -62,27 +62,27 @@ lesson,group,word,meaning
 19,Adv,もうすぐ,soon
 19,Phrase,おかげさます,Thank you (for help received)
 19,Conj,でも,but
-20,V (I),いります ［ビザが～］,"need, require [a visa]"
-20,V (II),しらべます,"check, investigate"
-20,V (III),しゅうりします,repair
+20,V1,いります ［ビザが～］,"need, require [a visa]"
+20,V2,しらべます,"check, investigate"
+20,V3,しゅうりします,repair
 20,N,ことば,"word, language"
 20,N,はじめ,the beginning
 20,N,おわり,the end
 20,Conj,～けど,but (informal form of が)
 20,Phrase,よかったら,if you like
-20,Adj (na),いろいろ,various
-21,V (I),おもいます,think
-21,V (I),いいます,say
-21,V (I),かちます,win
-21,V (II),まけます,"lose, be beaten"
-21,V (I),あります　［おまつりが～］,"[a festival] be held, take place"
-21,V (I),やくにたちます,be useful
-21,V (I),うごきます,"move, work"
-21,V (II),やめます　［かいしゃを～］,"quit or retire from [a company], stop, give up"
-21,V (II),りゅうがこします,study abroad
-21,Adj (na),むだ,wasteful
-21,Adj (na),ふべん,inconvenient
-21,Adj (i),すごい,"awful, great"
+20,naA,いろいろ,various
+21,V1,おもいます,think
+21,V1,いいます,say
+21,V1,かちます,win
+21,V2,まけます,"lose, be beaten"
+21,V1,あります　［おまつりが～］,"[a festival] be held, take place"
+21,V1,やくにたちます,be useful
+21,V1,うごきます,"move, work"
+21,V2,やめます　［かいしゃを～］,"quit or retire from [a company], stop, give up"
+21,V2,りゅうがこします,study abroad
+21,naA,むだ,wasteful
+21,naA,ふべん,inconvenient
+21,iA,すごい,"awful, great"
 21,N,ほんとう,true
 21,N,うそ,lie
 21,N,うそき,liar
@@ -107,12 +107,12 @@ lesson,group,word,meaning
 21,Adv,ほんとうに,really
 21,Adv,そんなに,not so (used with negatives)
 21,Adv,～について,"about ~, concerning ~"
-22,V (II),きます,"put on (a shirt, etc)"
-22,V (I),はきます,"put on (shoes, trousers, etc)"
-22,V (I),かぶります,"put on (a hat, etc)"
-22,V (II),かけます　［めがねを～］,put on [glasses]
-22,V (III),します　［ネクタイを～］,put on [tie]
-22,V (II),うまれます,be born
+22,V2,きます,"put on (a shirt, etc)"
+22,V1,はきます,"put on (shoes, trousers, etc)"
+22,V1,かぶります,"put on (a hat, etc)"
+22,V2,かけます　［めがねを～］,put on [glasses]
+22,V3,します　［ネクタイを～］,put on [tie]
+22,V2,うまれます,be born
 22,N,わたしたち,we
 22,N,コート,coat
 22,N,セーター,sweater
@@ -158,16 +158,16 @@ Appendix,N,きょねん,last year
 Appendix,N,まいしゅう,every week
 Appendix,N,まいつき,every month
 Appendix,N,まいとし、まいねん,every year
-23,V (I),ききます［せんせいに～］,ask [the teacher]
-23,V (I),まわします,turn
-23,V (I),ひきます,pull
-23,V (II),かえます,change
-23,V (I),さわります［ドアに～］,touch [a door]
-23,V (II),でます［あつりが～］,[change] come out
-23,V (I),あるきます,walk
-23,V (I),わたります［はしを～］,cross [a bridge]
-23,V (I),まがります［みぎへ～］,turn [to the right]
-23,Adj (i),さびしい,lonely
+23,V1,ききます［せんせいに～］,ask [the teacher]
+23,V1,まわします,turn
+23,V1,ひきます,pull
+23,V2,かえます,change
+23,V1,さわります［ドアに～］,touch [a door]
+23,V2,でます［あつりが～］,[change] come out
+23,V1,あるきます,walk
+23,V1,わたります［はしを～］,cross [a bridge]
+23,V1,まがります［みぎへ～］,turn [to the right]
+23,iA,さびしい,lonely
 23,N,［お］ゆ,hot water
 23,N,おと,sound
 23,N,サイズ,size
@@ -181,24 +181,24 @@ Appendix,N,まいとし、まいねん,every year
 23,N,たてもの,building
 23,N,なんかいも,many times
 23,Suffix,ーめ,the -th (indicating order)
-24,V (II),くれます,give (me)
-24,V (I),なおします,"repair, correct"
-24,V (I),つれて　いきます,take (someone)
-24,V (II),つれて　きます,bring (someone)
-24,V (I),おくります［ひとを］,"escort [someone], go with"
-24,V (III),しょかいします,introduce
-24,V (III),あんないします,"show around, show the way"
-24,V (III),せつめいします,explain
+24,V2,くれます,give (me)
+24,V1,なおします,"repair, correct"
+24,V1,つれて　いきます,take (someone)
+24,V2,つれて　きます,bring (someone)
+24,V1,おくります［ひとを］,"escort [someone], go with"
+24,V3,しょかいします,introduce
+24,V3,あんないします,"show around, show the way"
+24,V3,せつめいします,explain
 24,N,おじいさん、おじいちゃん,"grandfather, old man"
 24,N,おばあさん、おばあちゃん,"grandmother, old woman"
 24,N,じゅんび,preparation
 24,N,ひっこじ,moving out
 24,N,ぜんぶん,all
 24,N,じぶんで,by oneself
-25,V (II),かんがえます,"thing, consider"
-25,V (I),つきます,arrive
-25,V (I),とります　「としを～」,grow old
-25,V (II),たります,"be enough, be sufficient"
+25,V2,かんがえます,"thing, consider"
+25,V1,つきます,arrive
+25,V1,とります　「としを～」,grow old
+25,V2,たります,"be enough, be sufficient"
 25,N,いなか,"countryside, hometown"
 25,N,チャンス,chance
 25,N,おく,hundred million
@@ -206,16 +206,16 @@ Appendix,N,まいとし、まいねん,every year
 25,N,いみ,meaning
 25,N,たんきん,transfer
 25,N,こと,"thing, matter"
-25,V (I),がんばります,do one's best
-26,V (II),みます,"check, take a look at"
-26,V (I),さがします,"look for, search"
-26,V (II),おくれます「じかんに～」,be late [for an appt.]
-26,V (I),まに　あいます「じかんに～」,be in time [for an appt.]
-26,V (I),やります,do
-26,V (I),ひろいます,pick up
-26,V (II),れんらくします,"contact, get in touch with"
-26,Adj (i),きぶんが　いい,feel well
-26,Adj (i),きぶんが　わるい,feel ill
+25,V1,がんばります,do one's best
+26,V2,みます,"check, take a look at"
+26,V1,さがします,"look for, search"
+26,V2,おくれます「じかんに～」,be late [for an appt.]
+26,V1,まに　あいます「じかんに～」,be in time [for an appt.]
+26,V1,やります,do
+26,V1,ひろいます,pick up
+26,V2,れんらくします,"contact, get in touch with"
+26,iA,きぶんが　いい,feel well
+26,iA,きぶんが　わるい,feel ill
 26,N,うんどうきい,"altheltics meeting, sports day"
 26,N,ぼんおどり,Bon Festival Dance
 26,N,フリーマーケット,fleamarket
@@ -236,7 +236,7 @@ Appendix,N,まいとし、まいねん,every year
 26,part,こんな　～,~ like this
 26,part,そんな　～,~ like that
 26,part,あんな　～,~ like that over there
-26,V (I),だします,put out (the rubbish)
+26,V1,だします,put out (the rubbish)
 26,N,もえる　ごみ,burnable rubbish
 26,N,おきば,place where sth is put
 26,N,よこ,side
@@ -245,7 +245,46 @@ Appendix,N,まいとし、まいねん,every year
 26,N,ガス,gas
 26,N,うちゅう,"space, universe"
 26,N,うちゅうせん,spaceship
-26,Adj (i),こわい,be afraid of
+26,iA,こわい,be afraid of
 26,N,うちゅうステーション,space station
-26,V (I),ちがいます,be different
+26,V1,ちがいます,be different
 26,N,うちゅうひこし,astronaut
+27,V1,かいます,"keep (a pet), raise (an animal)"
+27,V1,はしります　［みちを～］,"run, drive [along a road]"
+27,V2,みえます　［やまが～］,[a mountain] can be seen
+27,V2,きこえます［おとが～］,[a sound] can be heard
+27,V2,できます　［みちが～］,"[a road] be made, be completed, come into existence"
+27,V2,ひらきます　［きょうしつを～］,"set up [a class], open, hold"
+27,naA,しんぱい［な］,"worried, anxious"
+27,N,ペット,pet
+27,N,とり,bird
+27,N,こえ,voice
+27,N,なみ,wave
+27,N,はなみ,fireworks
+27,N,どうぐ,"tool, instrument, equipment"
+27,N,クリーニング,"(dry) cleaning, laundry"
+27,N,マンション,"condominium, appretement house, blocks of flats"
+27,N,キッチン,kitchen
+27,N,～きょうしつ,~ class
+27,N,かた,person (respectful ひと)
+27,part,～ご,after ~ (duration of time)
+27,part,～しか,only ~ (used with negatives)
+27,part,ほかの,other
+27,part,はっきり,clearly
+27,N,かぐ,furniture
+27,N,ほんだな,bookcase
+27,N,いつか,"one day, some day"
+27,V2,たてます,to build
+27,iA,すばらしい,wonderful
+27,N,こどもたち,children
+27,N,しゅじんこう,"hero, heroine"
+27,N,かたち,shape
+27,naA,ふしぎ［な］,"fantastic, mysterious"
+27,N,たちえば,for example
+27,V2,つけます,"attach, put on"
+27,part,じゆうに,freely
+27,N,そら,sky
+27,V1,とびます,fly
+27,N,むかし,"old days, ancient times"
+27,N,じぶん,oneself
+27,N,しょうらい,future
