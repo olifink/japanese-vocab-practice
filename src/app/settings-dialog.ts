@@ -34,6 +34,7 @@ import { computed } from '@angular/core';
           <mat-select [value]="settings.mode()" (selectionChange)="settings.mode.set($event.value)">
             <mat-option value="JP-EN">Japanese to English</mat-option>
             <mat-option value="EN-JP">English to Japanese</mat-option>
+            <mat-option value="DAILY-CASUAL">Daily Casual Expressions</mat-option>
             <mat-option value="CONJUGATION-SHADOW">Verb Conjugation Shadowing</mat-option>
             <mat-option value="ADJECTIVE-SHADOW">Adjective Shadowing</mat-option>
             <mat-option value="NUMBERS">Japanese Numbers</mat-option>
@@ -41,6 +42,20 @@ import { computed } from '@angular/core';
           </mat-select>
         </mat-form-field>
       </div>
+
+      @if (settings.mode() === 'DAILY-CASUAL') {
+      <div class="control-row">
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Daily Module</mat-label>
+          <mat-select [value]="settings.selectedDailyModule()" (selectionChange)="settings.selectedDailyModule.set($event.value)">
+            <mat-option value="all">All Modules</mat-option>
+            @for (moduleName of dailyModules(); track moduleName) {
+            <mat-option [value]="moduleName">{{ moduleName }}</mat-option>
+            }
+          </mat-select>
+        </mat-form-field>
+      </div>
+      }
 
       @if (settings.mode() === 'CONJUGATION-SHADOW' || settings.mode() === 'ADJECTIVE-SHADOW') {
       <div class="control-row">
@@ -70,7 +85,7 @@ import { computed } from '@angular/core';
       </div>
       }
 
-      @if (settings.mode() !== 'CONJUGATION-SHADOW' && settings.mode() !== 'ADJECTIVE-SHADOW' && settings.mode() !== 'NUMBERS' && settings.mode() !== 'DATE') {
+      @if (settings.mode() !== 'CONJUGATION-SHADOW' && settings.mode() !== 'ADJECTIVE-SHADOW' && settings.mode() !== 'NUMBERS' && settings.mode() !== 'DATE' && settings.mode() !== 'DAILY-CASUAL') {
       <div class="control-row lesson-row">
         <mat-form-field appearance="outline" class="lesson-select">
           <mat-label>Lesson or Set</mat-label>
@@ -146,6 +161,7 @@ export class SettingsDialog {
   settings = inject(SettingsService);
   private vocabService = inject(VocabService);
   vocab = this.vocabService.getVocab();
+  dailyExpressions = this.vocabService.getDailyExpressions();
 
   numericLessons = computed(() => {
     const allVocab = this.vocab();
@@ -161,6 +177,12 @@ export class SettingsDialog {
     return uniqueLessons
       .filter((lesson): lesson is string => typeof lesson === 'string')
       .sort((a, b) => a.localeCompare(b));
+  });
+
+  dailyModules = computed(() => {
+    const expressions = this.dailyExpressions();
+    const uniqueModules = [...new Set(expressions.map(expression => expression.moduleName))];
+    return uniqueModules.filter(Boolean).sort((a, b) => a.localeCompare(b));
   });
 
   isNumericLesson(value: unknown): value is number {

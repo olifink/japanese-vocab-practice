@@ -29,6 +29,13 @@ export interface VerbConjugationItem {
 // Adjectives share the same conjugation structure as verbs
 export type AdjectiveItem = VerbConjugationItem;
 
+export interface DailyExpressionItem {
+  moduleName: string;
+  unitName: string;
+  kana: string;
+  english: string;
+}
+
 @Injectable({
   providedIn: 'root'
 })
@@ -36,6 +43,7 @@ export class VocabService {
   private vocab = signal<VocabItem[]>([]);
   private verbConjugations = signal<VerbConjugationItem[]>([]);
   private adjectives = signal<AdjectiveItem[]>([]);
+  private dailyExpressions = signal<DailyExpressionItem[]>([]);
   private http = inject(HttpClient);
 
   private getValue(row: Record<string, string>, key: string): string {
@@ -116,6 +124,25 @@ export class VocabService {
     this.adjectives.set(this.parseConjugationCsv(csvData));
   }
 
+  private parseDailyCsv(csvData: string): DailyExpressionItem[] {
+    const results = Papa.parse<Record<string, string>>(csvData, {
+      header: true,
+      skipEmptyLines: true
+    });
+
+    return results.data.map((row) => ({
+      moduleName: this.getValue(row, 'module_name'),
+      unitName: this.getValue(row, 'unit_name'),
+      kana: this.getValue(row, 'kana'),
+      english: this.getValue(row, 'english')
+    }));
+  }
+
+  async loadDailyExpressions(): Promise<void> {
+    const csvData = await firstValueFrom(this.http.get('daily.csv', { responseType: 'text' }));
+    this.dailyExpressions.set(this.parseDailyCsv(csvData));
+  }
+
   getVocab() {
     return this.vocab;
   }
@@ -126,5 +153,9 @@ export class VocabService {
 
   getAdjectives() {
     return this.adjectives;
+  }
+
+  getDailyExpressions() {
+    return this.dailyExpressions;
   }
 }

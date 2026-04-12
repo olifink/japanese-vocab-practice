@@ -39,6 +39,7 @@ export class App {
   vocab = this.vocabService.getVocab();
   verbConjugations = this.vocabService.getVerbConjugations();
   adjectives = this.vocabService.getAdjectives();
+  dailyExpressions = this.vocabService.getDailyExpressions();
 
   currentVerbIndex = signal<number>(0);
   isRevealed = signal<boolean>(false);
@@ -58,8 +59,29 @@ export class App {
     return allVocab.filter(v => v.lesson === lesson);
   });
 
+  filteredDailyExpressions = computed(() => {
+    const allExpressions = this.dailyExpressions();
+    const selectedModule = this.settings.selectedDailyModule();
+
+    if (selectedModule === 'all') return allExpressions;
+    return allExpressions.filter(expression => expression.moduleName === selectedModule);
+  });
+
+  activeFlashcards = computed(() => {
+    if (this.settings.mode() === 'DAILY-CASUAL') {
+      return this.filteredDailyExpressions().map((expression) => ({
+        group: expression.unitName,
+        japaneseForm: expression.kana,
+        meaning: expression.english,
+        lesson: expression.moduleName
+      }));
+    }
+
+    return this.filteredVocab();
+  });
+
   currentWord = computed(() => {
-    const list = this.filteredVocab();
+    const list = this.activeFlashcards();
     if (list.length === 0) return null;
     return list[this.currentVerbIndex() % list.length];
   });
@@ -81,6 +103,7 @@ export class App {
 
   isNumbersMode = computed(() => this.settings.mode() === 'NUMBERS');
   isDateMode = computed(() => this.settings.mode() === 'DATE');
+  isDailyMode = computed(() => this.settings.mode() === 'DAILY-CASUAL');
 
   currentShadowItem = computed(() => {
     if (this.settings.mode() === 'ADJECTIVE-SHADOW') return this.currentAdjective();
@@ -91,7 +114,7 @@ export class App {
   activeItemCount = computed(() => {
     if (this.settings.mode() === 'CONJUGATION-SHADOW') return this.verbConjugations().length;
     if (this.settings.mode() === 'ADJECTIVE-SHADOW') return this.adjectives().length;
-    return this.filteredVocab().length;
+    return this.activeFlashcards().length;
   });
 
   canGoPrevious = computed(() => !this.settings.isRandomMode() && this.activeItemCount() > 1);
@@ -104,11 +127,13 @@ export class App {
     this.vocabService.loadVocab();
     this.vocabService.loadVerbConjugations();
     this.vocabService.loadAdjectives();
+    this.vocabService.loadDailyExpressions();
 
     // Reset index when filter changes
     effect(() => {
       this.settings.mode();
       this.settings.selectedLesson();
+      this.settings.selectedDailyModule();
       this.settings.lessonRangeMode();
       this.currentVerbIndex.set(0);
       this.isRevealed.set(!this.isShadowMode() && this.settings.isCramMode());
@@ -216,7 +241,7 @@ export class App {
       ? this.verbConjugations()
       : mode === 'ADJECTIVE-SHADOW'
         ? this.adjectives()
-        : this.filteredVocab();
+        : this.activeFlashcards();
   }
 
   private stopPlayback(): void {

@@ -180,16 +180,18 @@
       Word {{ (currentVerbIndex() % activeItemCount()) + 1 }} of {{ activeItemCount() }}
       @if (!isShadowMode() && isNumericLesson(currentWord()?.lesson)) {
       (Lesson {{ currentWord()?.lesson }})
+      } @else if (isDailyMode() && currentWord()?.lesson) {
+      (Module {{ currentWord()?.lesson }})
       }
     </div>
   </div>
   } @else {
   <div class="loading">
     @if (isShadowMode() ? (settings.mode() === 'CONJUGATION-SHADOW' ? verbConjugations().length === 0 :
-    adjectives().length === 0) : vocab().length === 0) {
-    <p>Loading vocabulary...</p>
+    adjectives().length === 0) : (isDailyMode() ? dailyExpressions().length === 0 : vocab().length === 0)) {
+    <p>{{ isDailyMode() ? 'Loading daily expressions...' : 'Loading vocabulary...' }}</p>
     } @else {
-    <p>No vocabulary found for this lesson.</p>
+    <p>{{ isDailyMode() ? 'No daily expressions found for this module.' : 'No vocabulary found for this lesson.' }}</p>
     }
   </div>
   }

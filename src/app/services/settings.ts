@@ -1,7 +1,7 @@
 import { Injectable, signal, effect } from '@angular/core';
 import { LessonValue } from './vocab';
 
-export type PracticeMode = 'JP-EN' | 'EN-JP' | 'CONJUGATION-SHADOW' | 'ADJECTIVE-SHADOW' | 'NUMBERS' | 'DATE';
+export type PracticeMode = 'JP-EN' | 'EN-JP' | 'CONJUGATION-SHADOW' | 'ADJECTIVE-SHADOW' | 'NUMBERS' | 'DATE' | 'DAILY-CASUAL';
 export type LessonRangeMode = 'exact' | 'up-to';
 
 @Injectable({
@@ -12,6 +12,7 @@ export class SettingsService {
   isRandomMode = signal<boolean>(localStorage.getItem('isRandomMode') === 'true');
   isCramMode = signal<boolean>(localStorage.getItem('isCramMode') === 'true');
   selectedLesson = signal<LessonValue | 'all'>(this.getInitialLesson());
+  selectedDailyModule = signal<string | 'all'>((localStorage.getItem('selectedDailyModule') as string | 'all') || 'all');
   lessonRangeMode = signal<LessonRangeMode>((localStorage.getItem('lessonRangeMode') as LessonRangeMode) || 'exact');
   shadowPauseMs = signal<number>(this.getInitialNumber('shadowPauseMs', 700));
   shadowRepeatLoop = signal<number>(this.getInitialNumber('shadowRepeatLoop', 2));
@@ -23,6 +24,7 @@ export class SettingsService {
       localStorage.setItem('isRandomMode', this.isRandomMode().toString());
       localStorage.setItem('isCramMode', this.isCramMode().toString());
       localStorage.setItem('selectedLesson', this.selectedLesson().toString());
+      localStorage.setItem('selectedDailyModule', this.selectedDailyModule());
       localStorage.setItem('lessonRangeMode', this.lessonRangeMode());
       localStorage.setItem('shadowPauseMs', this.shadowPauseMs().toString());
       localStorage.setItem('shadowRepeatLoop', this.shadowRepeatLoop().toString());
